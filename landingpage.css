@@ -1,0 +1,129 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1b2b34, #3c4f65);
+    color: #f5f8fa;
+    overflow-x: hidden;
+  }
+  
+  /* Container for layout */
+  .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Header Styling */
+  header {
+    background: rgba(22, 29, 36, 0.7);
+    padding: 2rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+  
+  header h1 {
+    font-size: 3rem;
+    background: linear-gradient(to right, #00e3ae, #41b7ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+  }
+  
+  /* Navigation Tabs */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 1rem 2rem;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .tabs a {
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #00bcd4, #3f51b5);
+    margin: 0.5rem;
+    padding: 0.75rem 1.6rem;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 14px rgba(0, 188, 212, 0.4);
+  }
+  
+  .tabs a:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(63, 81, 181, 0.6);
+  }
+  
+  /* Main Welcome Section */
+  .welcome {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 3rem;
+  }
+  
+  .welcome h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #e0f7fa;
+    text-shadow: 1px 1px 2px #000;
+  }
+  
+  .welcome p {
+    font-size: 1.2rem;
+    color: #cfd8dc;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+  
+  /* Footer Styling */
+  footer {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #b0bec5;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  
+  /* Search Bar */
+  .search-container {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+  }
+  
+  .search-container input {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+  }
+  
+  .search-container input::placeholder {
+    color: #ccc;
+  }

@@ -1,0 +1,508 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2C2F38;
+    color: rgb(169, 167, 193);
+    margin: 0;
+    padding: 0;
+}
+
+#header {
+    background-color: #1A1F26;
+    padding: 15px;
+    text-align: center;
+}
+
+#control-panel {
+    background-color: #333;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.input-group input,
+.input-group select {
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    background-color: #555;
+    color: white;
+}
+
+#packet-capture {
+    padding: 20px;
+    background-color: #1E2125;
+    margin: 20px;
+    height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+    border: 2px solid #444;
+}
+
+#network-traffic-chart {
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.packet {
+    padding: 10px;
+    background-color: #444;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    color: #ccc;
+}
+
+.packet .time {
+    color: #8f8;
+}
+
+.packet .mac {
+    color: #8af;
+}
+
+.packet .ssid {
+    color: #f8a;
+}
+
+button {
+    padding: 10px;
+    background-color: #0052cc;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #003d99;
+}
+
+/* General Layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2C2F38; /* Keep existing body background */
+    color: rgb(40, 9, 238); /* Keep existing text color */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+#header {
+    background-color: #1A1F26; /* Keep existing header styling */
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+}
+
+/* Challenges Section */
+#challenges {
+    background-color: #1E2125; /* Dark background to match the theme */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.challenge {
+    background-color: #333; /* Dark background for individual challenge */
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.challenge p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.challenge p strong {
+    font-weight: bold;
+}
+
+.challenge-completed {
+    background-color: #28a745; /* Green background for completed challenges */
+    color: #fff;
+    border-left: 5px solid #218838;
+}
+
+.challenge-pending {
+    background-color: #dc3545; /* Red background for pending challenges */
+    color: #fff;
+    border-left: 5px solid #c82333;
+}
+
+.challenge button {
+    background-color: #0052cc; /* Blue button to match your theme */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.challenge button:hover {
+    background-color: #003d99; /* Darker blue on hover */
+}
+
+/* Score Section */
+#score {
+    background-color: #1E2125; /* Dark background for score section */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#score p {
+    margin: 0;
+}
+
+/* Packet List Section */
+#packet-list {
+    margin-top: 30px;
+    background-color: #1E2125; /* Dark background for packet list */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.packet {
+    background-color: #444; /* Match existing packet background color */
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    color: #ccc; /* Light text color for packets */
+}
+
+.packet span {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.packet button {
+    background-color: #28a745; /* Green button for packet actions */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.packet button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Packet Detail Section */
+#packet-detail-info {
+    background-color: #1E2125; /* Dark background for packet details */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+#packet-detail-info p {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    #header {
+        font-size: 20px; /* Adjust header font size for mobile */
+    }
+
+    .challenge button {
+        width: 100%; /* Make buttons full-width on mobile */
+        padding: 12px;
+    }
+
+    .packet button {
+        width: 100%; /* Make packet action buttons full-width */
+        padding: 12px;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+    overflow: auto; /* Enable scroll if needed */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #1E2125; /* Dark background */
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%; /* Adjust width */
+    color: rgb(17, 102, 230);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    text-align: center;
+    font-size: 24px;
+}
+
+ol {
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.close-button {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #f1f1f1;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#open-instructions-btn {
+    background-color: #0052cc;
+    color: rgb(253, 251, 251);
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+#open-instructions-btn:hover {
+    background-color: #003d99;
+}
+
+/* Modal Styles for Hints */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+    overflow: auto; /* Enable scroll if needed */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #1E2125; /* Dark background */
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%; /* Adjust width */
+    color: rgb(20, 27, 242);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    text-align: center;
+    font-size: 24px;
+}
+
+ul {
+    font-size: 16px;
+    margin-left: 20px;
+    list-style-type: disc;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.close-button {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #f1f1f1;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#open-hints-btn {
+    background-color: #0052cc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+#open-hints-btn:hover {
+    background-color: #003d99;
+}
+
+/* General Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #1E2125;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    color: rgb(17, 102, 230);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+h2 {
+    text-align: center;
+    font-size: 24px;
+}
+
+ol, ul {
+    font-size: 16px;
+    margin-left: 20px;
+    list-style-type: disc;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* Close Button */
+.close-button {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #f1f1f1;
+    text-decoration: none;
+}
+
+/* Buttons */
+button {
+    background-color: #0052cc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #003d99;
+}
+
+/* Cheat Sheet and Keywords Modal Styles */
+.cheat-sheet-content h2, 
+#keywordsModal .keywords-content h3 {
+    color: #4CAF50;
+    text-align: center;
+}
+
+.cheat-sheet-content h3,
+#keywordsModal .keywords-content h3 {
+    color: #333;
+    font-size: 18px;
+    margin: 15px 0 5px;
+}
+
+.cheat-sheet-content p,
+.cheat-sheet-content ul,
+#keywordsModal .keywords-content ul {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-left: 20px;
+}
+
+.cheat-sheet-content ul li,
+#keywordsModal .keywords-content ul li {
+    margin-bottom: 10px;
+}
+
+/* Specific Modal Adjustments */
+#keywordsModal .modal-content {
+    background-color: #0555df;
+    border: 1px solid #e9e7ed;
+    width: 75%;
+}
+
+#keywordsModal .close-button {
+    color: #007bff;
+}
+
+/* Smooth Modal Transition */
+.modal-content {
+    transition: all 0.3s ease;
+}
+
+#keywordsModal .modal-content {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}

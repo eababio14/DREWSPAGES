@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Security Lab</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #222; 
+            color: #ddd; 
+            text-align: center;
+        }
+        h1, h2 {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .terminal { 
+            width: 80%; 
+            margin: 20px auto; 
+            background: black; 
+            padding: 15px; 
+            border-radius: 5px; 
+            text-align: left;
+            box-shadow: 0 0 15px lime;
+            animation: bounceIn 1s ease-in-out;
+        }
+        #output { 
+            height: 250px; 
+            overflow-y: scroll; 
+            border-bottom: 1px solid gray; 
+            padding: 10px; 
+        }
+        input { 
+            width: 90%; 
+            padding: 10px; 
+            background: black; 
+            color: lime; 
+            border: none; 
+            font-size: 16px;
+            outline: none;
+        }
+        #aboutLab {
+            width: 80%;
+            margin: 20px auto;
+            padding: 15px;
+            background: #333;
+            border-left: 5px solid lime;
+            border-radius: 5px;
+            text-align: left;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .typed {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 1.5s steps(40, end);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Network Security Lab</h1>
+
+    <div id="aboutLab">
+        <h2>About This Lab</h2>
+        <p>This interactive lab teaches essential skills to secure a network and detect vulnerabilities using real-world tools.</p>
+        <p>In this lab, you will learn to:</p>
+        <ul>
+            <li>Scan for open ports and services using <code>Nmap</code>.</li>
+            <li>Configure firewall rules to block malicious traffic.</li>
+            <li>Analyze network traffic using <code>Wireshark</code> to detect vulnerabilities and threats.</li>
+            <li>Implement strategies to defend against attacks like port scanning and DDoS.</li>
+        </ul>
+        <p><strong>Disclaimer:</strong> This lab is intended for educational purposes only. Unauthorized use of these techniques on networks you do not own is illegal.</p>
+    </div>
+
+    <div id="instructions">
+        <h2>Step-by-Step Guide:</h2>
+        <ol>
+            <li><strong>Network Scanning:</strong> Type <code>nmap -sP 192.168.1.0/24</code> to scan the local network for live hosts.</li>
+            <li><strong>Port Scanning:</strong> Use <code>nmap -sT [IP]</code> to scan open ports on a target host.</li>
+            <li><strong>Service Detection:</strong> Run <code>nmap -sV [IP]</code> to detect services running on the open ports.</li>
+            <li><strong>Firewall Configuration:</strong> Create a rule to block incoming connections on port 80 with <code>iptables -A INPUT -p tcp --dport 80 -j DROP</code>.</li>
+            <li><strong>Packet Sniffing:</strong> Use <code>wireshark</code> to start capturing network traffic.</li>
+            <li><strong>Security Countermeasures:</strong> Implement strategies to block port scans and DDoS attacks.</li>
+        </ol>
+    </div>
+
+    <div class="terminal">
+        <div id="output"></div>
+        <input type="text" id="commandInput" placeholder="Enter a command..." autofocus>
+    </div>
+
+  <script>
+    document.getElementById('commandInput').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            let command = this.value.trim();
+            this.value = '';
+            processCommand(command);
+        }
+    });
+
+    function processCommand(command) {
+        let outputDiv = document.getElementById('output');
+        let sanitizedCommand = command.toLowerCase();
+        let response = `<span style='color: lightblue;'>$ ${command}</span><br>`;
+
+        let commandOutput = "";
+
+        switch (true) {
+            case sanitizedCommand.startsWith("nmap -sp"):
+                commandOutput = "✅ Scanning for live hosts...<br>192.168.1.1 is up<br>192.168.1.5 is up";
+                break;
+            case sanitizedCommand.startsWith("nmap -st"):
+                commandOutput = "📡 Scanning for open ports...<br>80/tcp open  http<br>22/tcp open  ssh";
+                break;
+            case sanitizedCommand.startsWith("nmap -sv"):
+                commandOutput = "🔍 Detecting services...<br>80/tcp  http  Apache/2.4.41<br>22/tcp  ssh   OpenSSH 7.6";
+                break;
+            case sanitizedCommand.startsWith("iptables -a"):
+                commandOutput = "🔒 Firewall rule applied: Blocked port 80.";
+                break;
+            case sanitizedCommand === "wireshark":
+    commandOutput = "📡 Starting Wireshark capture...<br><pre>" +
+        "Time       Source          Destination     Protocol  Length  Info<br>" +
+        "0.0001     192.168.1.10    8.8.8.8        ICMP      74      Echo (ping) request<br>" +
+        "0.0003     8.8.8.8         192.168.1.10   ICMP      74      Echo (ping) reply<br>" +
+        "0.0056     192.168.1.15    192.168.1.1    TCP       60      SYN (seq=0, win=64240)<br>" +
+        "0.0058     192.168.1.1     192.168.1.15   TCP       60      SYN-ACK (seq=0, ack=1, win=29200)<br>" +
+        "0.0060     192.168.1.15    192.168.1.1    TCP       60      ACK (seq=1, ack=1)<br>" +
+        "0.0102     192.168.1.15    192.168.1.1    HTTP      515     GET /index.html HTTP/1.1<br>" +
+        "0.0123     192.168.1.1     192.168.1.15   HTTP      1024    200 OK (text/html)<br>" +
+        "0.0450     192.168.1.22    192.168.1.100  ARP       42      Who has 192.168.1.100? Tell 192.168.1.22<br>" +
+        "0.0451     192.168.1.100   192.168.1.22   ARP       42      192.168.1.100 is at 00:1A:2B:3C:4D:5E<br>" +
+        "0.1005     192.168.1.200   192.168.1.1    DNS       84      Standard query A www.google.com<br>" +
+        "0.1012     192.168.1.1     192.168.1.200  DNS       100     Standard query response A 172.217.10.14<br>" +
+        "</pre>";
+    break;
+
+            case sanitizedCommand === "iptables -a input -p tcp --dport 80 -j drop":
+    commandOutput = "🚫 Firewall rule applied: Incoming traffic on port 80 blocked.";
+    break;
+
+            case sanitizedCommand === "exit":
+                commandOutput = "👋 Exiting simulation... Refresh to restart.";
+                break;
+            default:
+                commandOutput = "❌ Command not recognized. Try again!";
+                break;
+        }
+
+        let responseHTML = `<p class="typed">${response}${commandOutput}</p>`;
+        outputDiv.innerHTML += responseHTML;
+        outputDiv.scrollTop = outputDiv.scrollHeight;
+    }
+</script>
+
+
+    <div id="securityCountermeasures">
+        <h2>Security Countermeasures for Network Security</h2>
+        <p>To protect your network from common attacks, consider implementing the following security measures:</p>
+        <ul>
+            <li><strong>Use a Strong Firewall:</strong> Configure your firewall to block unauthorized traffic and limit access to sensitive services.</li>
+            <li><strong>Use Encryption:</strong> Encrypt sensitive data both in transit and at rest using standards like TLS/SSL for communication and AES for storage.</li>
+            <li><strong>Use Intrusion Detection Systems (IDS):</strong> Monitor network traffic for abnormal patterns indicative of malicious activity.</li>
+            <li><strong>Limit Open Ports:</strong> Only open the ports necessary for your network operations and close all others.</li>
+            <li><strong>Implement Network Segmentation:</strong> Segment your network to isolate critical systems and limit the damage from breaches.</li>
+            <li><strong>Regularly Update Systems:</strong> Keep all systems, routers, and firewalls up-to-date to patch known vulnerabilities.</li>
+            <li><strong>Use DDoS Protection:</strong> Implement measures to prevent or mitigate Distributed Denial of Service (DDoS) attacks.</li>
+        </ul>
+        <p><strong>Note:</strong> Implementing these measures will significantly reduce the risk of attacks such as port scanning and DDoS.</p>
+
+        <h3>Network Security Quiz</h3>
+        <p>Test your knowledge on network security:</p>
+        <form id="networkQuiz">
+            <label for="q1">1. What is the best tool for scanning open ports on a network?</label><br>
+            <input type="radio" id="q1a" name="q1" value="Netcat">
+            <label for="q1a">Netcat</label><br>
+            <input type="radio" id="q1b" name="q1" value="Nmap">
+            <label for="q1b">Nmap</label><br>
+
+            <label for="q2">2. What is a common method for blocking malicious traffic?</label><br>
+            <input type="radio" id="q2a" name="q2" value="Allow all inbound traffic">
+            <label for="q2a">Allow all inbound traffic</label><br>
+            <input type="radio" id="q2b" name="q2" value="Use a firewall to block malicious IPs">
+            <label for="q2b">Use a firewall to block malicious IPs</label><br>
+
+            <button type="submit">Submit Answers</button>
+        </form>
+
+        <div id="quizResults"></div>
+    </div>
+
+</body>
+</html>

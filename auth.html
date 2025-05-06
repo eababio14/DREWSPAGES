@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Generator</title>
+  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js"></script>
+  <link rel="stylesheet" href="newauth.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <h1>Drew's Pages</h1>
+</head>
+<div class="auth-wrapper">
+    <div class="auth-header">
+      <img src="logo.png" alt="MultiTool Hub Logo" class="logo">
+      <h1>MultiTool Hub</h1>
+      <p>One Place for Invoice, Logos, QR Codes, Currency & More</p>
+    </div>
+
+    <!-- Quick Overview of Tools -->
+    <div class="features">
+      <div class="feature">
+        <i class="fas fa-palette"></i>
+        <p>Logo Generator</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-qrcode"></i>
+        <p>QR Code Generator</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-dollar-sign"></i>
+        <p>Currency Converter</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-tools"></i>
+        <p>More Tools Coming!</p>
+      </div>
+    </div>
+
+<body>
+
+   
+  <div class="auth-container">
+    <div id="signUpForm">
+        <h2>Sign Up</h2>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <p id="passwordStrength"></p>
+        <button id="signUpBtn">Sign Up</button>
+        <p id="signUpMessage"></p>
+        <p>Already have an account? <a href="#" id="showSignIn">Sign In</a></p>
+    </div>
+   
+    <div id="signInForm" class="hidden">
+        <h2>Sign In</h2>
+        <input type="email" id="signinEmail" placeholder="Email">
+        <input type="password" id="signinPassword" placeholder="Password">
+        <button id="signInBtn">Sign In</button>
+        <p id="signInMessage"></p>
+        <p>Don't have an account? <a href="#" id="showSignUp">Sign Up</a></p>
+    </div>
+  </div>
+
+  <div id="resetPasswordForm" class="hidden">
+    <h2>Reset Password</h2>
+    <input type="email" id="resetEmail" placeholder="Enter your email">
+    <button id="resetPasswordBtn">Send Reset Link</button>
+    <p id="resetMessage"></p>
+    <p><a href="#" id="showSignInFromReset">Back to Sign In</a></p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3hSpTLaBhiYorE8cKtlFTdJ6vx60W37E",
+        authDomain: "invoiceapp-78ee3.firebaseapp.com",
+        databaseURL: "https://invoiceapp-78ee3-default-rtdb.firebaseio.com",
+        projectId: "invoiceapp-78ee3",
+        storageBucket: "invoiceapp-78ee3.appspot.com",
+        messagingSenderId: "736574136188",
+        appId: "1:736574136188:web:29c87d2ee372efdcf64ef9",
+        measurementId: "G-G05MPLWK45"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+  
+    const showMessage = (elementId, message, isSuccess = false) => {
+        const element = document.getElementById(elementId);
+        element.textContent = message;
+        element.style.color = isSuccess ? "green" : "red";
+    };
+  
+    document.getElementById("signUpBtn").addEventListener("click", async () => {
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+  
+        if (!email || !password) {
+            showMessage("signUpMessage", "Please fill in all fields.");
+            return;
+        }
+  
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            showMessage("signUpMessage", "Account created successfully!", true);
+            console.log("User created:", userCredential.user);
+        } catch (error) {
+            showMessage("signUpMessage", error.message);
+        }
+    });
+  
+    document.getElementById("signInBtn").addEventListener("click", async () => {
+      const email = document.getElementById("signinEmail").value.trim();
+      const password = document.getElementById("signinPassword").value.trim();
+  
+      if (!email || !password) {
+          showMessage("signInMessage", "Please fill in all fields.");
+          return;
+      }
+  
+      try {
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          showMessage("signInMessage", "Signed in successfully!", true);
+          console.log("User signed in:", userCredential.user);
+  
+          setTimeout(() => {
+              window.location.href = "landingpage.html";
+          }, 2000);
+      } catch (error) {
+          showMessage("signInMessage", error.message);
+      }
+    });
+
+    document.getElementById("showSignIn").addEventListener("click", (e) => {
+        e.preventDefault();
+        document.getElementById("signUpForm").classList.add("hidden");
+        document.getElementById("signInForm").classList.remove("hidden");
+    });
+
+    document.getElementById("showSignUp").addEventListener("click", (e) => {
+        e.preventDefault();
+        document.getElementById("signInForm").classList.add("hidden");
+        document.getElementById("signUpForm").classList.remove("hidden");
+    });
+
+    document.getElementById("password").addEventListener("input", function () {
+        const password = this.value;
+        const strengthIndicator = document.getElementById("passwordStrength");
+        const strength = checkPasswordStrength(password);
+
+        strengthIndicator.textContent = strength.message;
+        strengthIndicator.style.color = strength.color;
+    });
+
+    function checkPasswordStrength(password) {
+        let strength = { message: "Weak password", color: "red" };
+
+        if (password.length < 8) {
+            strength.message = "Too short! Use at least 8 characters.";
+        } else if (!/[A-Z]/.test(password)) {
+            strength.message = "Include at least one uppercase letter.";
+        } else if (!/[a-z]/.test(password)) {
+            strength.message = "Include at least one lowercase letter.";
+        } else if (!/[0-9]/.test(password)) {
+            strength.message = "Include at least one number.";
+        } else if (!/[\W_]/.test(password)) {
+            strength.message = "Include at least one special character (!@#$%^&*).";
+        } else {
+            strength.message = "Strong password!";
+            strength.color = "green";
+        }
+
+        return strength;
+    } 
+
+    document.getElementById("forgotPassword").addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById("signInForm").classList.add("hidden");
+        document.getElementById("resetPasswordForm").classList.remove("hidden");
+    });
+
+    document.getElementById("showSignInFromReset").addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById("resetPasswordForm").classList.add("hidden");
+        document.getElementById("signInForm").classList.remove("hidden");
+    });
+
+    document.getElementById("resetPasswordBtn").addEventListener("click", async () => {
+        const email = document.getElementById("resetEmail").value.trim();
+        if (!email) {
+            showMessage("resetMessage", "Please enter your email.");
+            return;
+        }
+
+        try {
+            await sendPasswordResetEmail(auth, email);
+            showMessage("resetMessage", "Password reset link sent! Check your email.", true);
+        } catch (error) {
+            showMessage("resetMessage", error.message);
+        }
+    });
+  </script>   
+</body>
+</html>

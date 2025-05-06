@@ -1,0 +1,167 @@
+/* Import a sleek, modern font */
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Lexend', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Header */
+h2 {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #60a5fa; /* Vibrant blue */
+    text-shadow: 0 0 10px rgba(96, 165, 250, 0.8);
+}
+
+/* Glassmorphic Container */
+div {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 15px;
+    display: inline-block;
+    max-width: 90%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Canvas */
+canvas {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    box-shadow: inset 3px 3px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* Inputs & Selects */
+input, select {
+    width: 80%;
+    max-width: 250px;
+    padding: 14px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    backdrop-filter: blur(8px);
+    box-shadow: inset 2px 2px 6px rgba(255, 255, 255, 0.1);
+}
+
+input:focus, select:focus {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 12px rgba(96, 165, 250, 0.5);
+}
+
+/* Color Picker */
+input[type="color"] {
+    width: 60px;
+    height: 60px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border-radius: 10px;
+    box-shadow: 2px 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+/* 3D Buttons */
+button {
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
+    color: #ffffff;
+    padding: 15px 28px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin: 10px;
+    text-transform: uppercase;
+    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.6s ease-in-out;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.7);
+}
+
+button:active {
+    transform: scale(0.95);
+    box-shadow: inset 2px 2px 8px rgba(255, 255, 255, 0.3);
+}
+
+/* Checkbox Labels */
+label {
+    margin: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    div {
+        width: 95%;
+    }
+    
+    input, select {
+        max-width: 100%;
+    }
+
+    button {
+        width: 90%;
+    }
+}
+
+/* Tooltip Effect */
+.tooltip {
+    cursor: pointer;
+    color: #60a5fa;
+    font-weight: bold;
+    margin-left: 5px;
+    position: relative;
+}
+
+.tooltip:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -30px;
+    left: 0;
+    background: #60a5fa;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+

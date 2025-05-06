@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure File Encryptor</title>
+    <link rel="stylesheet" href="securefile.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <button id="openModalBtn">ℹ️ What is this?</button>
+      <li><a href="landingpage.html">Home</a></li>
+      <li><a href="passwordmanager.html">Password Manager</a></li>
+    </ul>
+  </nav>
+<body>
+
+    <h1>Secure File Encryptor</h1>
+
+    <!-- File Drop Area -->
+    <div id="dropArea" style="border: 2px dashed #4CAF50; padding: 20px; text-align: center; cursor: pointer;">
+        Click or drag a file here to select
+        <input type="file" id="fileInput" style="display: none;" />
+    </div>
+
+    <!-- File Info Display -->
+    <p id="fileName">No file selected</p>
+    <p id="fileHash">File Hash: N/A</p>
+    <div id="fileMetadata"></div>
+
+    <!-- Password Input -->
+    <label for="passwordInput">Enter Password:</label>
+    <input type="password" id="passwordInput" />
+    <div id="passwordStrengthMeter" style="height: 10px; width: 100%; background: lightgray; margin-top: 5px;"></div>
+    <p id="passwordStrength"></p>
+
+    <!-- Algorithm Selection -->
+    <label for="algorithmSelect">Select Algorithm:</label>
+    <select id="algorithmSelect">
+        <option value="AES-GCM">AES-GCM</option>
+    </select>
+
+    <!-- Expiry Time (optional) -->
+    <label for="expiryTime">Set Expiry Time (optional):</label>
+    <input type="datetime-local" id="expiryTime" />
+
+    <!-- Buttons -->
+    <button id="encryptBtn">Encrypt File</button>
+    <button id="decryptBtn">Decrypt File</button>
+
+    <!-- Progress Bar -->
+    <progress id="progressBar" value="0" max="100" style="width: 100%; margin-top: 10px;"></progress>
+
+    
+   <div id="historyContainer" style="margin-top: 20px;">
+    <h3>Encryption/Decryption History</h3>
+    <div id="history" style="background: #f4f4f4; padding: 10px; border-radius: 5px;"></div>
+</div>
+  
+ <!-- Info Button -->
+
+
+<!-- Info Modal -->
+<div id="infoModal" class="modal">
+  <div class="modal-content">
+    <span class="closeBtn">&times;</span>
+    <h2>🔐 Secure File Encryption & Decryption Tool</h2>
+    <p>This web-based application allows you to securely encrypt and decrypt files directly in your browser — no installation or upload required.</p>
+    
+    <h3>🔧 How to Use:</h3>
+    <ul>
+      <li>📁 <strong>Upload a File</strong>: Drag and drop or select a file you want to protect.</li>
+      <li>🔑 <strong>Enter a Password</strong>: Choose a strong password — this will be used as your encryption key.</li>
+      <li>🛡️ <strong>Encrypt</strong>: Click the <em>Encrypt</em> button to convert your file into a secure, unreadable format.</li>
+      <li>🔓 <strong>Decrypt</strong>: To access the original file again, re-upload the encrypted file, enter the correct password, and click <em>Decrypt</em>.</li>
+      <li>⏰ <strong>Optional Expiration</strong>: Set a file access expiration time for temporary access (for display purposes only).</li>
+      <li>📊 <strong>Progress Tracking</strong>: Watch the progress bar for feedback during the encryption/decryption process.</li>
+      <li>📷 <strong>QR Code Sharing</strong>: Generate a QR code to share the encrypted file link securely (if sharing is enabled).</li>
+    </ul>
+
+    <p>✅ <strong>100% Private:</strong> All encryption and decryption is done locally in your browser. No files or passwords are transmitted or stored anywhere online.</p>
+    
+    <p style="margin-top: 20px; font-style: italic; color: #888;">
+      Tip: Use a unique, strong password and store it safely — losing it means losing access to the encrypted file.
+    </p>
+  </div>
+</div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <!-- Your JavaScript File -->
+    <script src="securefile.js"></script> <!-- Replace with actual script filename if different -->
+
+</body>
+</html>

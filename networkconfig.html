@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <header style="background-color: #333; color: #fff; padding: 20px; text-align: center; font-family: 'Arial', sans-serif;">
+        <h1 style="margin: 0;"></h1>
+        <nav style="margin-top: 10px;">
+          <a href="landingpage.html" style="color: #fff; text-decoration: none; margin: 0 15px;">Home</a>
+          <a href="secexam.html" style="color: #fff; text-decoration: none; margin: 0 15px;">Security+</a>
+          <a href="networkplus.html" style="color: #fff; text-decoration: none; margin: 0 15px;">Network+</a>
+          <a href="net.html" style="color: #fff; text-decoration: none; margin: 0 15px;">Network Security Simulation Lab</a>
+          <a href="wsp.html" style="color: #fff; text-decoration: none; margin: 0 15px;">Wiresless Security & Penetration Testing Lab</a>
+          <a href="packsuspi.html" style="color: #fff; text-decoration: none; margin: 0 15px;">Packet capture Simulator</a>
+        </nav>
+  </header>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Configuration and Setup Lab</title>
+    <style>
+       /* General Styles */
+body { 
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1e1e2e, #252540);
+    color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #4db8ff;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/* Terminal Output */
+.output { 
+    background: #111; 
+    color: #0f0; 
+    font-family: 'Courier New', Courier, monospace; 
+    padding: 200px; 
+    height: 100px; 
+    overflow-y: auto; 
+    border-radius: 10px;
+    border: 2px solid #0f0;
+    box-shadow: 0 0 8px #0f0;
+    text-shadow: 0 0 5px #0f0;
+    transition: all 0.3s ease-in-out;
+}
+.output:hover {
+    box-shadow: 0 0 15px #0f0;
+}
+
+/* Input Field */
+input {
+    width: 65%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid #4db8ff;
+    transition: 0.3s ease;
+}
+input:focus {
+    outline: none;
+    border-bottom: 2px solid #ffcc00;
+}
+
+/* Code Blocks */
+pre {
+    background: #282a36;
+    color: #50fa7b;
+    padding: 12px;
+    border-radius: 10px;
+    white-space: pre-wrap;
+    font-family: 'Fira Code', monospace;
+    overflow-x: auto;
+    border-left: 5px solid #ff79c6;
+    transition: 0.3s ease;
+}
+pre:hover {
+    transform: scale(1.02);
+}
+
+/* Command Box */
+.command-box {
+    background: rgba(255, 255, 255, 0.15);
+    border-left: 5px solid #ffcc00;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+.command-box:hover {
+    transform: scale(1.02);
+}
+
+/* Explanation */
+.explanation {
+    color: #2a08e9;
+    font-style: italic;
+    text-align: justify;
+}
+
+/* Correct and Incorrect Answer Styles */
+.correct {
+    color: #28a745;
+    font-weight: bold;
+    text-shadow: 0 0 5px #28a745;
+}
+.incorrect {
+    color: #dc3545;
+    font-weight: bold;
+    text-shadow: 0 0 5px #dc3545;
+}
+
+/* Buttons */
+button {
+    background: linear-gradient(135deg, #4db8ff, #007bff);
+    color: #fff;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+button:hover {
+    background: linear-gradient(135deg, #ffcc00, #ff5722);
+    transform: translateY(-3px);
+}
+
+/* Multiple Choice Questions */
+/* General Section Styling */
+.section {
+    background-color: #f4f7fc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+h4 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Question Styling */
+.question {
+    background-color: #ffffff;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.question p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+/* Radio Button Styling */
+label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* Button Styling */
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 150px;
+    align-self: center;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Result Styling */
+#quizResult {
+    text-align: center;
+    font-size: 18px;
+    color: #28a745;
+    margin-top: 20px;
+}
+
+/* Reset Button Styling */
+button[type="button"] {
+    background-color: #f44336;
+    margin-left: 10px;
+}
+
+button[type="button"]:hover {
+    background-color: #d32f2f;
+}
+
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #bbb;
+}
+
+    </style>
+</head>
+<body>
+    <h2>Network Configuration and Setup Lab</h2>
+    <p>In this lab, you'll simulate configuring network settings using commands like <code>netsh</code>, <code>route</code>, and others. Use the terminal below to enter commands and see the simulated results.</p>
+    
+    <h3>Simulate Network Configuration Commands</h3>
+    <p>Enter a command below to simulate network configuration and view the result.</p>
+    
+    <input type="text" id="commandInput" placeholder="Enter command here..." onkeypress="handleCommand(event)">
+    <div class="output" id="terminalOutput">Awaiting command...</div>
+    
+    <h3>Available Commands:</h3>
+    <ul>
+        <li><code>netsh interface ipv4 set address name="Ethernet" static 192.168.1.200 255.255.255.0 192.168.1.1</code> - Configure a static IPv4 address, subnet mask, and default gateway for the "Ethernet" interface.</li>
+        <li><code>netsh interface ipv4 set dns name="Ethernet" static 8.8.4.4</code> - Set the primary DNS server to 8.8.4.4 for the "Ethernet" interface.</li>
+        <li><code>route add 0.0.0.0 mask 0.0.0.0 192.168.1.1</code> - Add a default gateway route, directing all traffic to 192.168.1.1.</li>
+        <li><code>route delete 192.168.2.0</code> - Remove the specific route to the 192.168.2.0 network from the routing table.</li>
+        <li><code>netstat -an</code> - Display all active network connections and listening ports with their state.</li>
+        <li><code>netsh int ip reset</code> - Reset TCP/IP settings to their default state, useful for troubleshooting network issues.</li>
+        <li><code>ipconfig</code> - Display basic network adapter configuration, including IP address and default gateway.</li>
+        <li><code>ipconfig /release</code> - Release the current DHCP-assigned IP address from the network adapter.</li>
+        <li><code>ipconfig /renew</code> - Request a new IP address from the DHCP server for the network adapter.</li>
+        <li><code>ipconfig /all</code> - Display detailed network configuration, including MAC address, DHCP, and DNS settings.</li>
+        <li><code>ping [IP address]</code> - Send ICMP echo requests to check connectivity and response time from a remote host.</li>
+        <li><code>tracert [hostname]</code> - Trace the path packets take to reach a destination host, showing intermediate hops.</li>
+    </ul>
+    
+    
+    <div class="section">
+        <h4>1. Set Static IP for a Specific Interface</h4>
+        <div class="command-box">
+            <pre>netsh interface ipv4 set address name="Ethernet" static 192.168.1.200 255.255.255.0 192.168.1.1</pre>
+            <p class="explanation">This command sets a static IP address (192.168.1.200) on the "Ethernet" interface with a subnet mask (255.255.255.0) and a default gateway (192.168.1.1).</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h4>2. Set Primary DNS Server</h4>
+        <div class="command-box">
+            <pre>netsh interface ipv4 set dns name="Ethernet" static 8.8.4.4</pre>
+            <p class="explanation">This command sets the primary DNS server to 8.8.4.4 for the "Ethernet" interface.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h4>3. Add Secondary DNS Server</h4>
+        <div class="command-box">
+            <pre>netsh interface ipv4 add dns name="Ethernet" 8.8.8.8 index=2</pre>
+            <p class="explanation">This command adds a secondary DNS server (8.8.8.8) to the "Ethernet" interface.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h4>4. Add a Default Route</h4>
+        <div class="command-box">
+            <pre>route add 0.0.0.0 mask 0.0.0.0 192.168.1.1</pre>
+            <p class="explanation">This command adds a default route to the routing table, using the gateway 192.168.1.1.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h4>5. Delete a Specific Route</h4>
+        <div class="command-box">
+            <pre>route delete 192.168.2.0</pre>
+            <p class="explanation">This command removes the route to the 192.168.2.0 network from the routing table.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h4>6. Display Active Network Connections</h4>
+        <div class="command-box">
+            <pre>netstat -an</pre>
+            <p class="explanation">This command lists all active network connections and listening ports.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h4>7. Show Current Network Configuration</h4>
+        <div class="command-box">
+            <pre>ipconfig</pre>
+            <p class="explanation">This command displays the current network configuration, including the IP address, subnet mask, and default gateway.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h4>8. Show ARP Table</h4>
+        <div class="command-box">
+            <pre>arp -a</pre>
+            <p class="explanation">This command displays the ARP table, which maps IP addresses to MAC addresses for local network devices.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h4>9. Test Network Connectivity</h4>
+        <div class="command-box">
+            <pre>ping 8.8.8.8</pre>
+            <p class="explanation">This command pings Google's public DNS server (8.8.8.8) to check network connectivity and response time.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h4>Test Your Knowledge</h4>
+        <form id="quizForm">
+            <div class="question">
+                <p>1. Which command sets a static IP address?</p>
+                <label><input type="radio" name="q1" value="a"> ipconfig /all</label><br>
+                <label><input type="radio" name="q1" value="b"> netsh interface ipv4 set address name="Ethernet" static 192.168.1.200 255.255.255.0 192.168.1.1</label><br>
+                <label><input type="radio" name="q1" value="c"> route add 0.0.0.0 mask 0.0.0.0 192.168.1.1</label>
+            </div>
+    
+            <div class="question">
+                <p>2. What command displays active network connections?</p>
+                <label><input type="radio" name="q2" value="a"> arp -a</label><br>
+                <label><input type="radio" name="q2" value="b"> netstat -an</label><br>
+                <label><input type="radio" name="q2" value="c"> ipconfig /release</label>
+            </div>
+    
+            <div class="question">
+                <p>3. Which command removes a specific route from the routing table?</p>
+                <label><input type="radio" name="q3" value="a"> route delete 192.168.2.0</label><br>
+                <label><input type="radio" name="q3" value="b"> netsh int ip reset</label><br>
+                <label><input type="radio" name="q3" value="c"> ipconfig /renew</label>
+            </div>
+    
+            <div class="question">
+                <p>4. Which command adds a secondary DNS server?</p>
+                <label><input type="radio" name="q4" value="a"> netsh interface ipv4 add dns name="Ethernet" 8.8.8.8 index=2</label><br>
+                <label><input type="radio" name="q4" value="b"> netsh interface ipv4 set dns name="Ethernet" static 8.8.4.4</label><br>
+                <label><input type="radio" name="q4" value="c"> ping 8.8.8.8</label>
+            </div>
+    
+            <div class="question">
+                <p>5. Which command resets the TCP/IP stack?</p>
+                <label><input type="radio" name="q5" value="a"> ipconfig /release</label><br>
+                <label><input type="radio" name="q5" value="b"> netsh int ip reset</label><br>
+                <label><input type="radio" name="q5" value="c"> tracert google.com</label>
+            </div>
+    
+            <div class="question">
+                <p>6. What does <code>ipconfig /release</code> do?</p>
+                <label><input type="radio" name="q6" value="a"> Displays all IP configurations</label><br>
+                <label><input type="radio" name="q6" value="b"> Releases the current IP address</label><br>
+                <label><input type="radio" name="q6" value="c"> Renews the IP address</label>
+            </div>
+    
+            <div class="question">
+                <p>7. What command tests connectivity to an IP address?</p>
+                <label><input type="radio" name="q7" value="a"> tracert [hostname]</label><br>
+                <label><input type="radio" name="q7" value="b"> ipconfig /all</label><br>
+                <label><input type="radio" name="q7" value="c"> ping [IP address]</label>
+            </div>
+    
+            <div class="question">
+                <p>8. Which command traces the route to a destination host?</p>
+                <label><input type="radio" name="q8" value="a"> ping [IP address]</label><br>
+                <label><input type="radio" name="q8" value="b"> tracert [hostname]</label><br>
+                <label><input type="radio" name="q8" value="c"> netstat -an</label>
+            </div>
+    
+            <div class="question">
+                <p>9. What command renews the IP address from the DHCP server?</p>
+                <label><input type="radio" name="q9" value="a"> ipconfig /release</label><br>
+                <label><input type="radio" name="q9" value="b"> ipconfig /renew</label><br>
+                <label><input type="radio" name="q9" value="c"> netsh int ip reset</label>
+            </div>
+    
+            <div class="question">
+                <p>10. Which command configures a default gateway?</p>
+                <label><input type="radio" name="q10" value="a"> netsh interface ipv4 set address name="Ethernet" static 192.168.1.200 255.255.255.0 192.168.1.1</label><br>
+                <label><input type="radio" name="q10" value="b"> route add 0.0.0.0 mask 0.0.0.0 192.168.1.1</label><br>
+                <label><input type="radio" name="q10" value="c"> netstat -an</label>
+            </div>
+    
+            <button type="button" onclick="gradeQuiz()">Submit</button>
+            <button type="button" onclick="resetQuiz()">Reset</button>
+        </form>
+    
+        <div id="quizResult"></div>
+    </div>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("commandInput").addEventListener("keydown", handleCommand);
+});
+
+function handleCommand(event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // Prevent form submission if inside a form
+        let input = document.getElementById("commandInput").value.trim();
+        let output = document.getElementById("terminalOutput");
+        let response = "";
+
+        switch (input.toLowerCase()) {
+            case "netsh interface ipv4 set address name=\"ethernet\" static 192.168.1.200 255.255.255.0 192.168.1.1":
+                response = "Static IP successfully set to 192.168.1.200 with subnet mask 255.255.255.0 and gateway 192.168.1.1.";
+                break;
+            case "netsh interface ipv4 set dns name=\"ethernet\" static 8.8.4.4":
+                response = "Primary DNS server set to 8.8.4.4.";
+                break;
+            case "netsh interface ipv4 add dns name=\"ethernet\" 8.8.8.8 index=2":
+                response = "Secondary DNS server added: 8.8.8.8.";
+                break;
+            case "route add 0.0.0.0 mask 0.0.0.0 192.168.1.1":
+                response = "Default route added via 192.168.1.1.";
+                break;
+            case "route delete 192.168.2.0":
+                response = "Route to 192.168.2.0 deleted successfully.";
+                break;
+            case "netstat -an":
+                response = "Active Connections:\nProto  Local Address   Foreign Address  State\nTCP    192.168.1.200:5000   93.184.216.34:443  ESTABLISHED\nTCP    192.168.1.200:5001   172.217.16.14:443  TIME_WAIT";
+                break;
+            case "ipconfig":
+                response = "Windows IP Configuration\n\nEthernet adapter Ethernet:\n   IPv4 Address. . . . . . . . . . . : 192.168.1.200\n   Subnet Mask . . . . . . . . . . . : 255.255.255.0\n   Default Gateway . . . . . . . . . : 192.168.1.1";
+                break;
+            case "arp -a":
+                response = "Interface: 192.168.1.200 --- 0x15\n  Internet Address      Physical Address      Type\n  192.168.1.1          00-1a-2b-3c-4d-5e      dynamic\n  192.168.1.100        00-1a-2b-3c-4d-5f      dynamic";
+                break;
+            case "ping 8.8.8.8":
+                response = "Pinging 8.8.8.8 with 32 bytes of data:\nReply from 8.8.8.8: bytes=32 time=12ms TTL=118\nReply from 8.8.8.8: bytes=32 time=14ms TTL=118";
+                break;
+            default:
+                response = `Unknown command: ${input}`;
+        }
+
+        let commandEntry = document.createElement("div");
+        commandEntry.innerHTML = `<span style='color: green;'>> ${input}</span><br><span>${response}</span>`;
+        output.appendChild(commandEntry);
+        output.scrollTop = output.scrollHeight;
+        document.getElementById("commandInput").value = "";
+    }
+}
+
+function gradeQuiz() {
+    let answers = {
+        q1: { correct: "b", explanation: "The 'netsh' command sets a static IP address." },
+        q2: { correct: "b", explanation: "The 'netstat -an' command displays active network connections." },
+        q3: { correct: "a", explanation: "The 'route delete' command removes a specific route from the routing table." },
+        q4: { correct: "a", explanation: "The 'netsh interface ipv4 add dns' command adds a secondary DNS server." },
+        q5: { correct: "b", explanation: "The 'netsh int ip reset' command resets the TCP/IP stack." },
+        q6: { correct: "b", explanation: "The 'ipconfig /release' command releases the current IP address." },
+        q7: { correct: "c", explanation: "The 'ping [IP address]' command tests connectivity to an IP address." },
+        q8: { correct: "b", explanation: "The 'tracert [hostname]' command traces the route to a destination host." },
+        q9: { correct: "b", explanation: "The 'ipconfig /renew' command renews the IP address from the DHCP server." },
+        q10: { correct: "b", explanation: "The 'route add' command configures a default gateway." }
+    };
+
+    let score = 0;
+    let totalQuestions = Object.keys(answers).length;
+    let resultText = "";
+
+    // Check answers for each question
+    for (let key in answers) {
+        let selected = document.querySelector(`input[name="${key}"]:checked`);
+        if (selected && selected.value === answers[key].correct) {
+            score++;
+            resultText += `<p><strong>Question ${key.charAt(1)}:</strong> Correct! ${answers[key].explanation}</p>`;
+        } else {
+            resultText += `<p><strong>Question ${key.charAt(1)}:</strong> Wrong. ${answers[key].explanation}</p>`;
+        }
+    }
+
+    // Display result
+    resultText += `<p>You scored ${score} out of ${totalQuestions}. `;
+    if (score === totalQuestions) {
+        resultText += "Excellent! You mastered the commands!";
+    } else if (score >= totalQuestions / 2) {
+        resultText += "Good job! Keep practicing.";
+    } else {
+        resultText += "You might want to review the commands again.";
+    }
+
+    document.getElementById("quizResult").innerHTML = resultText;
+}
+
+function resetQuiz() {
+    document.getElementById("quizForm").reset();
+    document.getElementById("quizResult").innerHTML = "";
+}
+
+
+    </script>
+</body>
+</html>

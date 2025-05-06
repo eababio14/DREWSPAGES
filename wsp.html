@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireless Security Lab</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #222; 
+            color: #ddd; 
+            text-align: center;
+        }
+        h1, h2 {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .terminal { 
+            width: 80%; 
+            margin: 20px auto; 
+            background: black; 
+            padding: 15px; 
+            border-radius: 5px; 
+            text-align: left;
+            box-shadow: 0 0 15px lime;
+            animation: bounceIn 1s ease-in-out;
+        }
+        #output { 
+            height: 250px; 
+            overflow-y: scroll; 
+            border-bottom: 1px solid gray; 
+            padding: 10px; 
+        }
+        input { 
+            width: 90%; 
+            padding: 10px; 
+            background: black; 
+            color: lime; 
+            border: none; 
+            font-size: 16px;
+            outline: none;
+        }
+        #aboutLab {
+            width: 80%;
+            margin: 20px auto;
+            padding: 15px;
+            background: #333;
+            border-left: 5px solid lime;
+            border-radius: 5px;
+            text-align: left;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .typed {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 1.5s steps(40, end);
+        }
+    </style>
+</head>
+<body>
+    <li><a href="landingpage.html">Home</a></li>
+
+    <h1>Wireless Security & Penetration Testing Lab</h1>
+
+    <div id="aboutLab">
+        <h2>About This Lab</h2>
+        <p>This interactive Wireless Security Lab is designed to teach ethical hacking techniques for assessing Wi-Fi security.</p>
+        <p>By using real-world tools such as <code>airmon-ng</code>, <code>airodump-ng</code>, <code>aircrack-ng</code>, <code>hcxdumptool</code>, and <code>airbase-ng</code>, you will learn how to:</p>
+        <ul>
+            <li>Enable monitor mode on a wireless adapter.</li>
+            <li>Scan for Wi-Fi networks and identify vulnerabilities.</li>
+            <li>Capture network packets for analysis.</li>
+            <li>Perform deauthentication attacks to disconnect clients.</li>
+            <li>Crack WEP/WPA passwords (for ethical security testing).</li>
+            <li>Perform PMKID attacks for WPA/WPA2 cracking.</li>
+            <li>Simulate Evil Twin attacks by creating fake access points.</li>
+        </ul>
+        <p><strong>Disclaimer:</strong> This lab is intended for educational purposes only. Unauthorized use of these techniques on networks you do not own is illegal.</p>
+    </div>
+
+    <div id="instructions">
+        <h2>Step-by-Step Guide:</h2>
+        <ol>
+            <li><strong>Enable Monitor Mode:</strong> Type <code>airmon-ng start wlan0</code> to enable monitor mode.</li>
+            <li><strong>Scan for Networks:</strong> Use <code>airodump-ng wlan0mon</code> to list Wi-Fi networks.</li>
+            <li><strong>Target a Network:</strong> Run <code>airodump-ng -c [channel] --bssid [BSSID] -w capture wlan0mon</code>.</li>
+            <li><strong>Deauthenticate a Client:</strong> Simulate a deauth attack with <code>aireplay-ng --deauth 10 -a [BSSID] wlan0mon</code>.</li>
+            <li><strong>Crack WEP/WPA:</strong> If WEP, use <code>aircrack-ng -w /path/to/wordlist -b [BSSID] capture-01.cap</code>.</li>
+            <li><strong>PMKID Attack:</strong> Perform a PMKID attack with <code>hcxdumptool -i wlan0mon -o capture.pmkid</code>.</li>
+            <li><strong>Evil Twin Attack:</strong> Create a fake AP with <code>airbase-ng -e [SSID] -c [channel] wlan0mon</code>.</li>
+        </ol>
+    </div>
+
+    <div class="terminal">
+        <div id="output"></div>
+        <input type="text" id="commandInput" placeholder="Enter a command..." autofocus>
+    </div>
+
+    <script>
+        document.getElementById('commandInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                let command = this.value.trim().toLowerCase();
+                this.value = '';
+                processCommand(command);
+            }
+        });
+
+        function processCommand(command) {
+            let outputDiv = document.getElementById('output');
+            let response = `<span style='color: lightblue;' class="typed">$ ${command}</span><br>`;
+
+            let commandOutput = "";
+
+            if (command.startsWith("airmon-ng start wlan0")) {
+                commandOutput = "✅ Monitor mode enabled on wlan0mon.";
+            } else if (command.startsWith("airodump-ng wlan0mon")) {
+                commandOutput = "📡 Scanning for networks...<br>" +
+                    "BSSID \t\t PWR \t Beacons \t ESSID<br>" +
+                    "AA:BB:CC:DD:EE:FF \t -45 \t 134 \t HomeNetwork<br>" +
+                    "11:22:33:44:55:66 \t -70 \t 78 \t GuestWiFi";
+            } else if (command.startsWith("airodump-ng -c")) {
+                commandOutput = "📡 Capturing packets on channel...<br>Data saved as capture-01.cap";
+            } else if (command.startsWith("aireplay-ng --deauth")) {
+                commandOutput = "🔨 Sending deauthentication packets...<br>❌ Clients disconnected.";
+            } else if (command.startsWith("aircrack-ng -w")) {
+                commandOutput = "🔓 Cracking WPA/WPA2...<br>✅ Password found: <strong>MySecureWiFi123</strong>";
+            } else if (command.startsWith("hcxdumptool -i wlan0mon -o")) {
+                commandOutput = "🔑 Performing PMKID attack...<br>✅ PMKID captured and saved to capture.pmkid";
+            } else if (command.startsWith("airbase-ng -e")) {
+                commandOutput = "🛠️ Creating fake access point...<br>✅ Fake AP [SSID] created on channel [channel].";
+            } else if (command === "exit") {
+                commandOutput = "👋 Exiting simulation... Refresh to restart.";
+            } else {
+                commandOutput = "❌ Command not recognized. Try again!";
+            }
+
+            let responseHTML = `<p class="typed">${response}${commandOutput}</p>`;
+
+            outputDiv.innerHTML += responseHTML;
+            outputDiv.scrollTop = outputDiv.scrollHeight;
+
+            // Apply typing effect
+            let elements = document.querySelectorAll('.typed');
+            elements.forEach(el => el.style.animation = "typing 1.5s steps(40, end)");
+        }
+    </script>
+  
+  <div id="securityCountermeasures">
+    <h2>Security Countermeasures for Wi-Fi Networks</h2>
+    <p>To protect your Wi-Fi network from common attacks, consider implementing the following security measures:</p>
+    <ul>
+        <li><strong>Use WPA3 Encryption:</strong> Always use the latest Wi-Fi encryption standard (WPA3) for better security. If WPA3 is unavailable, use WPA2 with a strong passphrase.</li>
+        <li><strong>Disable WPS:</strong> Wi-Fi Protected Setup (WPS) is a feature that makes it easy to connect devices but is vulnerable to brute-force attacks. Disable it to prevent attacks.</li>
+        <li><strong>Change Default SSID:</strong> Change the default SSID of your router to a custom name that doesn’t identify the brand or model of the router.</li>
+        <li><strong>Enable MAC Address Filtering:</strong> While not foolproof, MAC address filtering can add an extra layer of security by allowing only specific devices to connect to your network.</li>
+        <li><strong>Use Strong Passwords:</strong> Use a complex password for your Wi-Fi network. Avoid simple, easily guessed passwords.</li>
+        <li><strong>Disable Remote Administration:</strong> Disable remote administration of your router to prevent unauthorized access over the internet.</li>
+        <li><strong>Enable Network Segmentation:</strong> Set up a guest network for visitors to prevent them from accessing your main network.</li>
+        <li><strong>Regularly Update Router Firmware:</strong> Check for updates to your router’s firmware regularly to fix known vulnerabilities and security flaws.</li>
+    </ul>
+    <p><strong>Note:</strong> Implementing these measures will greatly reduce the risk of common attacks like Evil Twin, PMKID, and others.</p>
+
+    <h3>Wi-Fi Security Quiz</h3>
+    <p>Test your knowledge on securing Wi-Fi networks:</p>
+    <form id="wifiQuiz">
+        <label for="q1">1. What is the best encryption standard for securing a Wi-Fi network?</label><br>
+        <input type="radio" id="q1a" name="q1" value="WPA2">
+        <label for="q1a">WPA2</label><br>
+        <input type="radio" id="q1b" name="q1" value="WEP">
+        <label for="q1b">WEP</label><br>
+        <input type="radio" id="q1c" name="q1" value="WPA3">
+        <label for="q1c">WPA3</label><br>
+
+        <label for="q2">2. What is the most secure action to take regarding WPS (Wi-Fi Protected Setup)?</label><br>
+        <input type="radio" id="q2a" name="q2" value="Enable it for convenience">
+        <label for="q2a">Enable it for convenience</label><br>
+        <input type="radio" id="q2b" name="q2" value="Disable it">
+        <label for="q2b">Disable it</label><br>
+
+        <label for="q3">3. What should you do with the default SSID of your router?</label><br>
+        <input type="radio" id="q3a" name="q3" value="Leave it as is">
+        <label for="q3a">Leave it as is</label><br>
+        <input type="radio" id="q3b" name="q3" value="Change it to something unique">
+        <label for="q3b">Change it to something unique</label><br>
+
+        <label for="q4">4. Is it recommended to use weak passwords for your Wi-Fi network?</label><br>
+        <input type="radio" id="q4a" name="q4" value="Yes">
+        <label for="q4a">Yes</label><br>
+        <input type="radio" id="q4b" name="q4" value="No">
+        <label for="q4b">No</label><br>
+
+        <button type="button" onclick="checkQuizAnswers()">Submit Answers</button>
+    </form>
+
+    <div id="quizResult"></div>
+</div>
+
+<script>
+    function checkQuizAnswers() {
+        let score = 0;
+        let resultText = "Your score: ";
+        
+        // Question 1
+        if (document.getElementById("q1c").checked) score++;
+        
+        // Question 2
+        if (document.getElementById("q2b").checked) score++;
+        
+        // Question 3
+        if (document.getElementById("q3b").checked) score++;
+        
+        // Question 4
+        if (document.getElementById("q4b").checked) score++;
+
+        resultText += score + " out of 4";
+        document.getElementById("quizResult").innerHTML = resultText;
+    }
+</script>
+<style>
+    /* General Styling */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #222;
+        color: #ddd;
+        text-align: center;
+    }
+
+    /* Security Countermeasures Section */
+    #securityCountermeasures {
+        width: 80%;
+        margin: 20px auto;
+        padding: 15px;
+        background: #333;
+        border-left: 5px solid lime;
+        border-radius: 5px;
+        text-align: left;
+        animation: fadeIn 2s ease-in-out;
+    }
+
+    #securityCountermeasures h2 {
+        animation: fadeIn 2s ease-in-out;
+    }
+
+    #securityCountermeasures p {
+        font-size: 1.1em;
+        margin-bottom: 15px;
+    }
+
+    #securityCountermeasures ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    #securityCountermeasures ul li {
+        margin: 8px 0;
+        font-size: 1.1em;
+    }
+
+    /* Quiz Form Styling */
+    #securityCountermeasures form {
+        margin-top: 20px;
+        display: grid;
+        gap: 20px;
+        justify-items: center;
+    }
+
+    #securityCountermeasures label {
+        font-size: 1.1em;
+        color: #ddd;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    #securityCountermeasures input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    #securityCountermeasures .quiz-options {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #securityCountermeasures .quiz-options input[type="radio"] {
+        margin-bottom: 10px;
+    }
+
+    #securityCountermeasures button {
+        padding: 10px 20px;
+        background-color: lime;
+        color: #222;
+        border: none;
+        font-size: 1.2em;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+        width: 50%;
+    }
+
+    #securityCountermeasures button:hover {
+        background-color: #00cc00;
+    }
+
+    /* Result Display */
+    #quizResult {
+        margin-top: 20px;
+        font-size: 1.2em;
+        color: lightblue;
+    }
+
+    /* Animation for fadeIn */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+</style>
+
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Logo Generator</title>
+    <link rel="stylesheet" href="logo.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <button onclick="signOut()">Sign Out</button>
+    <header>
+        <header class="side-header">
+          <h1>Drew's Pages</h1>
+          <nav>
+            <ul>
+              <li><a href="realtimeinv.html">Invoices</a></li>
+              <li><a href="qrcodefeatures.html">QR Code Generator</a></li>
+              <li><a href="ccnt.html">Currency Coverter</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+    <h2 style="text-align: center;">Logo Generator</h2>
+    <div style="text-align: center;">
+        <canvas id="logoCanvas" width="400" height="300"></canvas>
+        <br>
+        <input type="text" id="description" placeholder="Main Text" />
+        <span class="tooltip" data-tooltip="Enter the main text for your logo.">?</span>
+        <input type="text" id="secondaryText" placeholder="Secondary Text" />
+        <span class="tooltip" data-tooltip="Enter secondary text if desired.">?</span>
+        <input type="color" id="colorPicker" value="#ff0000" />
+        <span class="tooltip" data-tooltip="Pick the color for your main text.">?</span>
+        <br>
+        <select id="fontSelectorMain">
+            <option value="Arial">Arial</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Courier">Courier</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Tahoma">Tahoma</option>
+            <option value="Trebuchet MS">Trebuchet MS</option>
+            <option value="Times New Roman">Times New Roman</option>  
+        </select>
+        <span class="tooltip" data-tooltip="Select the font for the main text.">?</span>
+        <input type="number" id="fontSizeMain" placeholder="Main Text Size" value="40" />
+        <span class="tooltip" data-tooltip="Specify the font size for the main text.">?</span>
+        <select id="fontSelectorSymbol">
+            <option value="Arial">Arial</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Courier">Courier</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Tahoma">Tahoma</option>
+            <option value="Trebuchet MS">Trebuchet MS</option>
+            <option value="Times New Roman">Times New Roman</option>
+        </select>
+        <span class="tooltip" data-tooltip="Select the font for the symbol.">?</span>
+        <input type="number" id="fontSizeSymbol" placeholder="Symbol Size" value="30" />
+        <span class="tooltip" data-tooltip="Specify the font size for the symbol.">?</span>
+        <br>
+        <select id="symbolSelector"></select>
+        <span class="tooltip" data-tooltip="Choose a symbol to represent your brand.">?</span>
+        <input type="number" id="symbolRotation" placeholder="Rotation (degrees)" value="0" />
+        <span class="tooltip" data-tooltip="Set the rotation angle for the symbol.">?</span>
+        <br>
+       <label for="symbolScale">Symbol Scale:</label>
+       <input type="range" id="symbolScale" min="0.5" max="3" step="0.1" value="1">
+
+        <span class="tooltip" data-tooltip="Adjust the scaling of your symbol.">?</span>
+
+        <label><input type="checkbox" id="borderToggle"> Border</label>
+        <span class="tooltip" data-tooltip="Enable or disable the border around the logo.">?</span>
+        <label><input type="checkbox" id="textShadowToggle"> Text Shadow</label>
+        <span class="tooltip" data-tooltip="Add or remove shadow from the text.">?</span>
+        <label><input type="checkbox" id="gradientToggle"> Gradient</label>
+        <span class="tooltip" data-tooltip="Toggle the gradient background for your logo.">?</span>
+        <label><input type="checkbox" id="textOutlineToggle"> Text Outline</label>
+        <span class="tooltip" data-tooltip="Add or remove outline around the text.">?</span>
+        <label><input type="checkbox" id="glowToggle"> Glow</label>
+        <span class="tooltip" data-tooltip="Enable or disable a glowing effect on the text.">?</span>
+        
+        <input type="checkbox" id="curveText">
+        <label for="curveText">Curve Text:</label>
+        <span class="tooltip" data-tooltip="Curve the text to fit around a circle.">?</span>
+        <br>
+        <input type="checkbox" id="qrcodeCheckbox" /> Include QR Code
+        <span class="tooltip" data-tooltip="Enable to embed a QR code in your logo.">?</span>
+        <input type="text" id="urlInput" placeholder="Enter URL for QR Code" />
+        <span class="tooltip" data-tooltip="Enter a link to generate a QR code with your logo.">?</span>
+
+
+        
+        <input type="file" id="imageUpload" />
+        <span class="tooltip" data-tooltip="Upload an image to incorporate into the logo.">?</span>
+        <input type="number" id="imgX" placeholder="Image X" />
+        <span class="tooltip" data-tooltip="Set the horizontal position of the image.">?</span>
+        <input type="number" id="imgY" placeholder="Image Y" />
+        <span class="tooltip" data-tooltip="Set the vertical position of the image.">?</span>
+        <input type="number" id="imgWidth" placeholder="Image Width" />
+        <span class="tooltip" data-tooltip="Set the width of the uploaded image.">?</span>
+        <input type="number" id="imgHeight" placeholder="Image Height" />
+        <span class="tooltip" data-tooltip="Set the height of the uploaded image.">?</span>
+        <br>
+     
+        <button id="generateBtn">Generate Logo</button>
+        <button id="randomLogoBtn">Randomize</button>
+        <button id="downloadBtn">Download</button>
+        <button id="resetBtn">Reset</button>
+    </div>
+    <footer>
+        <div class="footer-container">
+          <p>&copy; 2025 Invoice Generator. All rights reserved.</p>
+          <p>Contact us: <a href="mailto:support@invoicegen.com">support@invoicegen.com</a></p>
+        </div>
+      </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script src="logo.js"></script>
+  
+
+
+  
+</body>
+</html>
+

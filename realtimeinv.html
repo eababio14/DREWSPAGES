@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Generator</title>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
+  <link rel="stylesheet" href="realtimeinv.css">
+  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="feedbac.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+  <body>
+  <header>
+    <header class="side-header">
+      <button onclick="signOut()">Sign Out</button>
+      <h1>Drew's Pages</h1>
+      <nav>
+        <ul>
+          <li><a href="landingpage.html">Home</a></li>
+          <li><a href="logo.html">Logo generator</a></li>
+          <li><a href="qrcodefeatures.html">QR Code Generator</a></li>
+          <li><a href="ccnt.html">Currency Coverter</a></li>
+        </ul>
+      </nav>
+    </div>
+      <button id="openChartsBtn">Invoice Chart Snapshot</button>
+      <button onclick="openModal()">Recurring Payment Status Chart</button>
+      <button onclick="OpenModal()">Invoice Benefits</button>
+      <button id="openModal">Give Feedback</button>
+  </header>
+ 
+
+ <div id="invoice-alert-banner" class="hidden">
+    <p id="invoice-alert-message"></p>
+    <button id="close-alert-btn">x</button>
+</div>
+
+
+  
+  <div class="invoice-container">
+    <h1>Invoice Generator</h1>
+    <div class="form-section">
+      <label for="invoiceNumber">Invoice #:</label>
+        <span class="tooltip" data-tooltip="This is a unique auto-generated invoice number.">?</span>
+      <input type="text" id="invoiceNumber" readonly>
+      
+      
+      <label for="invoiceDate">Date:</label>
+       <span class="tooltip" data-tooltip="Select the invoice issue date.">?</span>
+      <input type="date" id="invoiceDate">
+      
+      <label for="dueDate">Due Date:</label>
+      <span class="tooltip" data-tooltip="Select the due date for payment.">?</span>
+      <input type="date" id="dueDate">
+      
+      <label for="currency">Currency:</label>
+       <span class="tooltip" data-tooltip="Choose the currency for this invoice.">?</span>
+        
+      <select id="currency">
+        <option value="USD">$ - USD</option>
+        <option value="EUR">€ - EUR</option>
+        <option value="GBP">£ - GBP</option>
+        <option value="JPY">¥ - JPY</option>
+        <option value="AUD">$ - AUD</option>
+        <option value="CAD">$ - CAD</option>
+        <option value="CHF">Fr - CHF</option>
+        <option value="CNY">¥ - CNY</option>
+        <option value="INR">₹ - INR</option>
+        <option value="NZD">$ - NZD</option>
+        <option value="SEK">kr - SEK</option>
+        <option value="NOK">kr - NOK</option>
+        <option value="MXN">$ - MXN</option>
+        <option value="ZAR">R - ZAR</option>
+        <option value="SGD">$ - SGD</option>
+        <option value="HKD">$ - HKD</option>
+        <option value="KRW">₩ - KRW</option>
+        <option value="BRL">R$ - BRL</option>
+        <option value="RUB">₽ - RUB</option>
+        <option value="TRY">₺ - TRY</option>
+        <option value="PLN">zł - PLN</option>
+        <option value="THB">฿ - THB</option>
+        <option value="IDR">Rp - IDR</option>
+        <option value="PHP">₱ - PHP</option>
+        <option value="VND">₫ - VND</option>
+        <option value="MYR">RM - MYR</option>
+        <option value="EGP">£ - EGP</option>
+        <option value="SAR">﷼ - SAR</option>
+        <option value="AED">د.إ - AED</option>
+        <option value="PKR">₨ - PKR</option>
+        <option value="BDT">৳ - BDT</option>
+        <option value="KWD">د.ك - KWD</option>
+        <option value="QAR">﷼ - QAR</option>
+        <option value="ISK">kr - ISK</option>
+        <option value="DZD">دج - DZD</option>
+        <option value="MAD">د.م. - MAD</option>
+        <option value="NGN">₦ - NGN</option>
+        <option value="TWD">NT$ - TWD</option>
+        <option value="ARS">$ - ARS</option>
+        <option value="CLP">$ - CLP</option>
+        <option value="COP">$ - COP</option>
+        <option value="PEN">S/ - PEN</option>
+        <option value="UYU">$U - UYU</option>
+        <option value="GHS">₵ - Ghanaian Cedi (GHS)</option>
+        <option value="NGN">₦ - Nigerian Naira (NGN)</option>
+        <option value="ZAR">R - South African Rand (ZAR)</option>
+        <option value="EGP">£ - Egyptian Pound (EGP)</option>
+        <option value="KES">KSh - Kenyan Shilling (KES)</option>
+        <option value="TZS">TSh - Tanzanian Shilling (TZS)</option>
+        <option value="UGX">USh - Ugandan Shilling (UGX)</option>
+        <option value="XOF">Fr - West African CFA Franc (XOF)</option>
+        <option value="XAF">Fr - Central African CFA Franc (XAF)</option>
+        <option value="ZMW">ZK - Zambian Kwacha (ZMW)</option>
+        <option value="MWK">MK - Malawian Kwacha (MWK)</option>
+        <option value="MZN">MT - Mozambican Metical (MZN)</option>
+        <option value="BWP">P - Botswana Pula (BWP)</option>
+        <option value="SZL">E - Eswatini Lilangeni (SZL)</option>
+        <option value="LSL">L - Lesotho Loti (LSL)</option>
+        <option value="NAD">$ - Namibian Dollar (NAD)</option>
+        <option value="SCR">₨ - Seychellois Rupee (SCR)</option>
+        <option value="MUR">₨ - Mauritian Rupee (MUR)</option>
+        <option value="MAD">د.م. - Moroccan Dirham (MAD)</option>
+        <option value="DZD">دج - Algerian Dinar (DZD)</option>
+        <option value="SDG">ج.س. - Sudanese Pound (SDG)</option>
+        <option value="ETB">ብር - Ethiopian Birr (ETB)</option>
+        <option value="RWF">Fr - Rwandan Franc (RWF)</option>
+        <option value="CDF">Fr - Congolese Franc (CDF)</option>
+        <option value="AOA">Kz - Angolan Kwanza (AOA)</option>
+      </select>
+    </div>
+
+    <div class="logo-section">
+      <label for="businessLogo">Business Logo:</label>
+      <span class="tooltip" data-tooltip="Upload your business logo here.">?</span>
+      <input type="file" id="businessLogo" accept="image/*">
+      <button id="removeLogo">Remove Logo</button>
+    </div>
+    <img id="logoPreview" class="business-logo" style="max-width: 150px; display: none;">
+    
+    <div class="business-info-section">
+      <label for="businessName">Business Name:</label>
+      <span class="tooltip" data-tooltip="Enter the official name of your business.">?</span>
+      <input type="text" id="businessName" placeholder="Enter your business name">
+      <!-- Payment Platform Selection -->
+      <span class="tooltip" data-tooltip="Select a payment platform for this invoice.">?</span>
+<select id="paymentPlatform">
+    <option value="paypal">PayPal</option>
+    <option value="stripe">Stripe</option>
+    <option value="square">Square</option>
+    <option value="venmo">Venmo</option>
+    <option value="cashapp">Cash App</option>
+    <option value="zelle">Zelle</option>
+    <option value="applepay">Apple Pay</option>
+    <option value="googlepay">Google Pay</option>
+    <option value="amazonpay">Amazon Pay</option>
+    <option value="googlewallet">Google Wallet</option>
+    <option value="alipay">Alipay</option>
+    <option value="wechatpay">WeChat Pay</option>
+    <option value="jcb">JCB</option>
+    <option value="diners">Diners Club</option>
+    <option value="mastercard">Mastercard</option>
+    <option value="visa">Visa</option>
+    <option value="americanexpress">American Express</option>
+    <option value="discover">Discover</option>
+    <option value="unionpay">UnionPay</option>
+    <option value="custom">Other</option>
+</select>
+    
+
+<!-- Payment Link Inputs for each platform -->
+<div id="paypalLink" style="display: none;">
+    <label for="paypalPaymentLink">Enter PayPal Payment Link:</label>
+    <input type="url" id="paypalPaymentLink" placeholder="Enter your PayPal payment link">
+</div>
+
+<div id="stripeLink" style="display: none;">
+    <label for="stripePaymentLink">Enter Stripe Payment Link:</label>
+    <input type="url" id="stripePaymentLink" placeholder="Enter your Stripe payment link">
+</div>
+
+<div id="squareLink" style="display: none;">
+    <label for="squarePaymentLink">Enter Square Payment Link:</label>
+    <input type="url" id="squarePaymentLink" placeholder="Enter your Square payment link">
+</div>
+
+<div id="venmoLink" style="display: none;">
+    <label for="venmoPaymentLink">Enter Venmo Payment Link:</label>
+    <input type="url" id="venmoPaymentLink" placeholder="Enter your Venmo payment link">
+</div> 
+
+<div id="cashappLink" style="display: none;">
+    <label for="cashappPaymentLink">Enter Cash App Payment Link:</label>
+    <input type="url" id="cashappPaymentLink" placeholder="Enter your Cash App payment link">
+</div>
+
+<div id="zelleLink" style="display: none;">
+    <label for="zellePaymentLink">Enter Zelle Payment Link:</label>
+    <input type="url" id="zellePaymentLink" placeholder="Enter your Zelle payment link">
+</div>
+
+<div id="applePayLink" style="display: none;">
+    <label for="applePayPaymentLink">Enter Apple Pay Payment Link:</label>
+    <input type="url" id="applePayPaymentLink" placeholder="Enter your Apple Pay payment link">
+</div>
+
+<div id="googlePayLink" style="display: none;">
+    <label for="googlePayPaymentLink">Enter Google Pay Payment Link:</label>
+    <input type="url" id="googlePayPaymentLink" placeholder="Enter your Google Pay payment link">
+</div>
+
+<div id="amazonPayLink" style="display: none;">
+    <label for="amazonPayPaymentLink">Enter Amazon Pay Payment Link:</label>
+    <input type="url" id="amazonPayPaymentLink" placeholder="Enter your Amazon Pay payment link">
+</div>
+
+<div id="googleWalletLink" style="display: none;">
+    <label for="googleWalletPaymentLink">Enter Google Wallet Payment Link:</label>
+    <input type="url" id="googleWalletPaymentLink" placeholder="Enter your Google Wallet payment link">
+</div>
+
+<div id="alipayLink" style="display: none;">
+    <label for="alipayPaymentLink">Enter Alipay Payment Link:</label>
+    <input type="url" id="alipayPaymentLink" placeholder="Enter your Alipay payment link">
+</div>
+
+<div id="wechatPayLink" style="display: none;">
+    <label for="wechatPayPaymentLink">Enter WeChat Pay Payment Link:</label>
+    <input type="url" id="wechatPayPaymentLink" placeholder="Enter your WeChat Pay payment link">
+</div>
+
+<div id="jcbLink" style="display: none;">
+    <label for="jcbPaymentLink">Enter JCB Payment Link:</label>
+    <input type="url" id="jcbPaymentLink" placeholder="Enter your JCB payment link">
+</div>
+
+<div id="dinersLink" style="display: none;">
+    <label for="dinersPaymentLink">Enter Diners Club Payment Link:</label>
+    <input type="url" id="dinersPaymentLink" placeholder="Enter your Diners Club payment link">
+</div>
+
+<div id="mastercardLink" style="display: none;">
+    <label for="mastercardPaymentLink">Enter Mastercard Payment Link:</label>
+    <input type="url" id="mastercardPaymentLink" placeholder="Enter your Mastercard payment link">
+</div>
+
+<div id="visaLink" style="display: none;">
+    <label for="visaPaymentLink">Enter Visa Payment Link:</label>
+    <input type="url" id="visaPaymentLink" placeholder="Enter your Visa payment link">
+</div>
+
+<div id="americanexpressLink" style="display: none;">
+    <label for="americanexpressPaymentLink">Enter American Express Payment Link:</label>
+    <input type="url" id="americanexpressPaymentLink" placeholder="Enter your American Express payment link">
+</div>
+
+<div id="discoverLink" style="display: none;">
+    <label for="discoverPaymentLink">Enter Discover Payment Link:</label>
+    <input type="url" id="discoverPaymentLink" placeholder="Enter your Discover payment link">
+</div>
+
+<div id="unionpayLink" style="display: none;">
+    <label for="unionpayPaymentLink">Enter UnionPay Payment Link:</label>
+    <input type="url" id="unionpayPaymentLink" placeholder="Enter your UnionPay payment link">
+</div>
+
+<div id="customLink" style="display: none;">
+    <label for="customPaymentLink">Enter Your Payment Link:</label>
+    <input type="url" id="customPaymentLink" placeholder="Enter your payment link">
+</div>
+<button id="openGuide">Generate Payment Links</button>
+
+    <div class="address-section">
+      <div>
+        <span class="tooltip" data-tooltip="Enter your business address">?</span>
+        <textarea id="senderAddress" placeholder="Enter your business address or Information"></textarea>
+        <span class="tooltip" data-tooltip="Enter your contact (e.g., email, phone)">?</span>
+        <input type="text" id="businessContact" placeholder="Enter your contact (e.g., email, phone)">
+      </div>
+      <button onclick="saveBusinessInfo()">Save Business Info</button>
+      <div>
+        <h3>To (Recipient)</h3>
+        <span class="tooltip" data-tooltip="Enter recipient's name.">?</span>
+        <textarea id="recipientAddress" placeholder="Enter recipient's name"></textarea>
+      </div>
+    </div>
+     
+
+    <div class="items-section">
+      <h3>Items</h3>
+      <table id="itemsTable">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>subTotal</th>
+            <th>Total</th>
+            <th>Amount Paid</th>
+            <th>Amount Due</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button id="addItem">Add Item</button>
+    </div>
+      
+
+    <div class="tax-discount-section">
+      <label for="taxRate">Tax (%):</label>
+      <span class="tooltip" data-tooltip="Enter the applicable tax rate based on your country's regulations or your chosen rate.">?</span>
+      <input type="number" id="taxRate" placeholder="Enter tax rate">
+
+      <label for="discount">Discount (%):</label>
+      <span class="tooltip" data-tooltip="Specify a discount percentage, if applicable, to reduce the total amount.">?</span>
+      <input type="number" id="discount" placeholder="Enter discount rate">
+    </div>
+
+    <div class="totals-section">
+      <p>Subtotal: <span id="subtotal">0.00</span></p>
+      <p>Tax: <span id="taxAmount">0.00</span></p>
+      <p>Discount: <span id="discountAmount">0.00</span></p>
+      <p>Total: <span id="grandTotal">0.00</span></p>
+      <p>Paid: <span id="amountPaid">0.00</span></p>
+      <p>Due: <span id="amountOwed">0.00</span></p>
+    </div>
+
+    <label>
+      <input type="checkbox" id="isRecurring"> Recurring Invoice
+  </label>
+  
+  <label for="recurringInterval">Interval:</label>
+  <select id="recurringInterval">
+      <option value="weekly">Weekly</option>
+      <option value="monthly">Monthly</option>
+      <option value="yearly">Yearly</option>
+  </select>
+
+    <div class="notes-section">
+      <h3>Notes</h3>
+      <textarea id="notes" placeholder="Additional information or instructions"></textarea>
+    </div>
+<div class="signature-container">
+    <h3>Digital Signature:</h3>
+    <canvas id="signatureCanvas" class="signature-box"></canvas>
+    
+    <div class="signature-options">
+        <label for="penColor">Pen Color:</label>
+        <input type="color" id="penColor" value="#000000">
+        
+        <label for="penSize">Pen Size:</label>
+        <select id="penSize">
+            <option value="2">Thin</option>
+            <option value="4" selected>Medium</option>
+            <option value="6">Thick</option>
+        </select>
+    </div>
+
+    <div class="signature-buttons">
+        <button class="signature-clear" onclick="clearCanvas()">Clear</button>
+        <button class="signature-undo" onclick="undoLastStroke()">Undo</button>
+        <button class="signature-save" onclick="saveSignature()">Save</button>
+        <button class="signature-download" onclick="downloadSignature()">Download</button>
+    </div>
+
+    <img id="signatureImage" class="signature-image" alt="Saved Signature">
+    <input type="hidden" id="signatureData">
+</div>
+
+    <div id="invoicePreview" class="invoice-preview"></div>
+  </div>
+
+  <div class="actions-section">
+    <button id="generateInvoice">Generate Invoice</button>
+    <button id="downloadInvoiceButton" class="btn btn-primary">Download PDF</button>
+    <button id="printInvoiceButton" class="btn btn-secondary">Print Invoice</button>
+    <button id="clearInvoice">Clear Invoice</button>
+  </div>
+  
+  <div id="email-template">
+    <h2>Email Invoice</h2>
+    
+    <label for="client-email">Client Email:</label>
+    <input type="email" id="client-email" placeholder="client@example.com" required>
+    
+    <button id="send-emailjs">Send Emailjs</button>
+  </div>
+
+  <div id="email-template">
+    <h2>Email Invoice</h2>
+    
+    <label for="client-email">Client Email:</label>
+    <input type="email" id="client-email" placeholder="client@example.com" required>
+    
+    <button id="send-email">Send Email</button>
+  </div>
+  
+  
+  <div>
+    <!-- Search Invoice History -->
+    <label for="searchInvoice">Search Invoices:</label>
+    <input type="text" id="searchInvoice" placeholder="Search by invoice number or customer name...">
+
+    <!-- Invoice History Section -->
+    <div id="invoiceHistory">
+        <!-- This section will be populated dynamically by the displayInvoiceHistory function -->
+    </div>
+  </div>
+  
+<!-- Payment Guide Modal -->
+<div id="paymentGuideModal" class="modal">
+    <div class="modal-content">
+        <span class="Close">&times;</span>
+        <h2>How to Generate Payment Links</h2>
+        <div id="paymentGuideContent"></div>
+    </div>
+</div>
+<div id="invoiceBenefitsModal" class="modal invoice-modal">
+  <div class="modal-content">
+    <span class="Close" onclick="CloseModal()">&times;</span>
+    <h2>Why Use Our Invoice Generator?</h2>
+    <ul>
+      <li><i class="fas fa-file-invoice-dollar"></i> <strong>Effortless Invoicing:</strong> Generate professional invoices instantly with ease.</li>
+      <li><i class="fas fa-globe"></i> <strong>Multi-Currency Support:</strong> Create invoices in various currencies to accommodate global clients.</li>
+      <li><i class="fas fa-building"></i> <strong>Business Branding:</strong> Upload your logo to personalize your invoices.</li>
+      <li><i class="fas fa-credit-card"></i> <strong>Integrated Payment Options:</strong> Seamlessly add PayPal, Stripe, Venmo, and other payment links.</li>
+      <li><i class="fas fa-edit"></i> <strong>Customization:</strong> Modify invoice details, including tax rates, discounts, and itemized lists.</li>
+      <li><i class="fas fa-lock"></i> <strong>Secure & Reliable:</strong> Your data is stored securely without third-party access.</li>
+      <li><i class="fas fa-print"></i> <strong>Print & Download:</strong> Easily save invoices as PDFs or print them directly.</li>
+      <li><i class="fas fa-qrcode"></i> <strong>QR Code Payment:</strong> Automatically generate a QR code linked to your payment gateway for easy transactions.</li>
+      <li><i class="fas fa-envelope"></i> <strong>Automatic Email Generation:</strong> You can send invoices via email instantly, including payment details and your personal payment link.</li>
+    </ul>
+  </div>
+    
+</div>    
+ <div id="taxReportContainer"></div>
+
+
+<div id="chartModal" class="chart-modal">
+      <div class="chart-modal-content">
+          <span class="close">&times;</span>
+          <!-- Loading Spinner -->
+          <div id="loadingSpinner" style="display: none;">
+              Loading...
+          </div>
+          
+          <!-- Charts Containers -->
+          <div class="chart-container">
+              <canvas id="invoiceStatusChart"></canvas> <!-- Invoice Status Pie Chart -->
+          </div>
+
+          <div class="chart-container">
+              <canvas id="paymentChart"></canvas> <!-- Payment Status Bar Chart -->
+          </div>
+      </div>
+  </div>
+
+  <div id="receiptSection">
+    <h2>Paid Invoices - Receipts</h2>
+    <table class="receipt-table">
+        <thead>
+            <tr>
+                <th>Invoice #</th>
+                <th>Date</th>
+                <th>Recipient</th>
+                <th>Total</th>
+                <th>Amount Paid</th>
+                <th>Receipt Actions</th>
+            </tr>
+        </thead>
+        <tbody id="receiptTableBody">
+            <!-- Receipts will be populated here -->
+        </tbody>
+    </table>
+</div>
+<div id="recurringInvoiceContainer"></div>
+    
+    <div id="analyticsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times; Close</button>
+            <h2>Recurring Invoice Analytics Dashboard</h2>
+            <div class="dashboard">
+                <div class="card">
+                    <h3>Invoice Status Breakdown</h3>
+                    <canvas id="statusChart"></canvas>
+                </div>
+                <div class="card">
+                    <h3>Monthly Revenue Trends</h3>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="inventory-management">
+    <h3>Inventory Management</h3>
+    <form id="inventoryForm">
+        <label for="itemDescription">Description</label>
+        <input type="text" id="itemDescription" required>
+        
+        <label for="itemQuantity">Quantity</label>
+        <input type="number" id="itemQuantity" value="1" min="1" required>
+        
+        <label for="itemPrice">Unit Price</label>
+        <input type="number" id="itemPrice" value="0" min="0" step="0.01" required>
+
+        <button type="submit">Add/Update Item</button>
+    </form>
+</div>
+<div class="inventory-display">
+    <h3>Current Inventory</h3>
+    <table id="inventoryTable">
+        <thead>
+            <tr>
+                <th>Checkbox</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="inventoryList">
+            <!-- Inventory items will be displayed here -->
+        </tbody>
+    </table>
+</div>
+
+<div id="feedbackModal" class="modal">
+  <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h2>Feedback Form</h2>
+      <form id="feedbackForm">
+          <input type="text" id="name" placeholder="Your Name" required>
+          <input type="email" id="email" placeholder="Your Email" required>
+          <textarea id="feedback" placeholder="Your Feedback" required></textarea>
+          <button type="submit">Submit</button>
+      </form>
+  </div>
+</div>
+
+<script>
+  // Modal open and close functionality
+  document.getElementById("openModal").addEventListener("click", function() {
+      document.getElementById("feedbackModal").style.display = "block";
+  });
+
+  document.getElementById("closeModal").addEventListener("click", function() {
+      document.getElementById("feedbackModal").style.display = "none";
+  });
+
+  // Handle form submission
+  document.getElementById("feedbackForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      var formData = {
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          feedback: document.getElementById("feedback").value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbxPcUQyiB2OD2S0wH6ZPZ_gM24oTlY882gzj8CltTZKrN1LQfTo2bEguJrnb8kTjh9CEQ/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData)
+      })
+      .then(response => response.json()) // Convert to JSON
+      .then(data => {
+          console.log("Server Response:", data);
+          alert("Feedback submitted successfully!");
+          document.getElementById("feedbackModal").style.display = "none"; // ✅ Close modal on success
+          document.getElementById("feedbackForm").reset(); // ✅ Clear form fields
+      })
+      .catch(error => {
+          console.error("Error:", error);
+          alert("Error submitting feedback. Check console for details.");
+      });
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("closeModal").addEventListener("click", function() {
+        document.getElementById("feedbackModal").style.display = "none";
+    });
+});
+
+</script>
+
+
+<footer>
+  <div class="footer-container">
+    <p>&copy; 2025 Invoice Generator. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:support@invoicegen.com">support@invoicegen.com</a></p>
+  </div>
+</footer>
+
+   
+  <script src="displayfix.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</body>
+</html>

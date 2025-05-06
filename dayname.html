@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghanaian Day Name Calculator</title>
+  <link rel="stylesheet" href="moderndayname.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.0/dist/emoji-button.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+
+<body>
+  <nav>
+    <ul>
+      <button class="akan-btn" onclick="openAkanModal()">Learn About Akan Day Names</button>
+      <li><a href="landingpage.html">Home</a></li>
+      <li><a href="#faqs">FAQs</a></li>
+    </ul>
+  </nav>
+  
+  <div class="certificate-preview-section">
+  <h2>Certificate Previews</h2>
+  <div class="certificate-preview-grid">
+    <img src="design1.png" alt="Traditional Kente Theme" class="cert-thumb" />
+    <img src="design2.png" alt="Modern Minimalist" class="cert-thumb" />
+    <img src="design3.png" alt="Royal Gold Style" class="cert-thumb" />
+    <img src="design4.png" alt="New Style" class="cert-thumb" />
+    <img src="design5.png" alt="Elegant Style" class="cert-thumb" />
+    <img src="design6.png" alt="Youthful Style" class="cert-thumb" />
+    <img src="design7.png" alt="Royal Navy Ivy Blue Style" class="cert-thumb" />
+    <img src="design8.png" alt="Rustic Style" class="cert-thumb" />
+    <img src="design9.png" alt="Vintage Style" class="cert-thumb" />
+    <img src="design10.png" alt="Royal Vintage Style" class="cert-thumb" />
+    <img src="design11.png" alt="Traditional Fabric Style" class="cert-thumb" />
+    <img src="design12.png" alt="Royal Kente Fabric Style" class="cert-thumb" />
+    <img src="design13.png" alt="Royal Modern Kente Fabric Style" class="cert-thumb" />
+    <img src="design14.png" alt="Kente Fabric Style" class="cert-thumb" />
+    <img src="design15.png" alt="Fabric Style" class="cert-thumb" />
+  </div>
+</div>
+<!-- Scoped Modal -->
+<div id="certificateModal" class="modal-preview">
+  <span class="close-preview" onclick="closeModal()">&times;</span>
+  <img class="modal-content-preview" id="modalImage" />
+  <div id="caption"></div>
+</div>
+
+<!-- Modal Structure -->
+<div id="akanModal" class="akan-modal">
+  <div class="akan-modal-content">
+    <span class="akan-close" onclick="closeAkanModal()">&times;</span>
+    <h2 class="akan-title">Akan Day Names & Cultural Significance</h2>
+    <p class="akan-description">
+      In Ghanaian culture, especially among the Akan people, a person’s day name is based on the day of the week they were born. 
+      These names carry cultural, spiritual, and symbolic meanings, and are believed to influence a person’s character and destiny.
+    </p>
+
+    <div class="akan-grid">
+
+      <!-- Sunday -->
+      <div class="akan-card">
+        <h3>🌞 Sunday</h3>
+        <p><strong>Male:</strong> Kwesi / Kweku / Akwasi<br><strong>Female:</strong> Akosua</p>
+        <p class="traits">Bold, confident leaders. Spiritually aligned with new beginnings. 🕊️</p>
+      </div>
+
+      <!-- Monday -->
+      <div class="akan-card">
+        <h3>🌙 Monday</h3>
+        <p><strong>Male:</strong> Kwadwo / Kojo<br><strong>Female:</strong> Adwoa</p>
+        <p class="traits">Peaceful, nurturing, and empathetic. 🌱</p>
+      </div>
+
+      <!-- Tuesday -->
+      <div class="akan-card">
+        <h3>🔥 Tuesday</h3>
+        <p><strong>Male:</strong> Kwabena<br><strong>Female:</strong> Abena</p>
+        <p class="traits">Brave, passionate protectors. 🛡️</p>
+      </div>
+
+      <!-- Wednesday -->
+      <div class="akan-card">
+        <h3>🌊 Wednesday</h3>
+        <p><strong>Male:</strong> Kwaku<br><strong>Female:</strong> Akua</p>
+        <p class="traits">Curious, intelligent, and wise. 🧠</p>
+      </div>
+
+      <!-- Thursday -->
+      <div class="akan-card">
+        <h3>⚡ Thursday</h3>
+        <p><strong>Male:</strong> Yaw<br><strong>Female:</strong> Yaa</p>
+        <p class="traits">Courageous and bold. Natural leaders. 🦁</p>
+      </div>
+
+      <!-- Friday -->
+      <div class="akan-card">
+        <h3>🌾 Friday</h3>
+        <p><strong>Male:</strong> Kofi<br><strong>Female:</strong> Afia</p>
+        <p class="traits">Adventurous, outgoing, and fun. 🎉</p>
+      </div>
+
+      <!-- Saturday -->
+      <div class="akan-card">
+        <h3>🌻 Saturday</h3>
+        <p><strong>Male:</strong> Kwame<br><strong>Female:</strong> Ama</p>
+        <p class="traits">Wise, disciplined, and spiritual. 🕯️</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+<div class="container">
+  <h1 id="title">Find Your Ghanaian Day Name</h1>
+
+  <form id="dayNameForm">
+    <!-- Language Selection -->
+    <label for="language">Select Language:</label>
+    <select id="language" onchange="translatePage()">
+      <option value="en">English</option>
+      <option value="tw">Twi</option>
+      <option value="ga">Ga</option>
+    </select>
+
+    <!-- Date of Birth Input -->
+    <label for="dob" id="dobLabel">
+      Enter Your Date of Birth:
+      <span class="tooltip">?
+        <span class="tooltiptext">Please select your birth date in YYYY-MM-DD format.</span>
+      </span>
+    </label>
+    <input type="date" id="dob" required />
+
+    <!-- Gender Selection -->
+    <label for="gender" id="genderLabel">
+      Select Your Gender:
+      <span class="tooltip">?
+        <span class="tooltiptext">Select either Male or Female.</span>
+      </span>
+    </label>
+    <select id="gender" required>
+      <option value="" disabled selected>Select your gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+
+    <!-- Tribe Selection -->
+    <label for="tribe">Select Tribe:</label>
+    <select id="tribe" name="tribe" required>
+      <option value="akan">Akan</option>
+      <option value="ga">Ga</option>
+      <option value="ewe">Ewe</option>
+      <option value="fante">Fante</option>
+    </select>
+
+    <!-- Name and Email -->
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" required />
+
+    <label for="email">Your Email:</label>
+    <input type="email" id="email" />
+
+    <!-- Submit Button -->
+    <button type="submit" id="submitBtn">Get Day Name</button>
+  </form>
+
+  <!-- Result Output -->
+  <div id="result"></div>
+
+  <!-- Social Sharing Buttons -->
+  <div id="shareButtons" style="display: none; gap: 10px; margin-top: 10px;">
+    <button id="webShareBtn">Share via Web Share</button>
+    <button id="twitterShareBtn">Share on Twitter</button>
+    <button id="facebookShareBtn">Share on Facebook</button>
+    <button id="linkedinShareBtn">Share on LinkedIn</button>
+    <button id="printBtn">Print</button>
+  </div>
+
+  <!-- Certificate Generation -->
+  <label for="designSelect">Choose Certificate Design:</label>
+  <select id="designSelect">
+    <option value="design1">Flag style</option>
+    <option value="design2">Modern Minimalist</option>
+    <option value="design3">Royal Gold Style</option>
+    <option value="design4">New Style</option>
+    <option value="design5">Elegant Style</option>
+    <option value="design6">Youthful Style</option>
+    <option value="design7">Royal Navy Ivy Blue Style</option>
+    <option value="design8">Rustic Style</option>
+    <option value="design9">Vintage Style</option>
+    <option value="design10">Royal Vintage Style</option>
+    <option value="design11">Traditional Kente Fabric Style</option>
+    <option value="design12">Royal Kente Fabric Style</option>
+    <option value="design13">Royal Modern Kente Fabric Style</option>
+    <option value="design14">Kente Fabric Style</option>
+    <option value="design15">Fabric Style</option>
+  </select>
+  <button id="generateCertificateBtn">Generate Certificate</button>
+</div>
+
+ 
+   <div class="historical-dates">
+    <h2 id="historicalTitle">Historical Dates in Ghana</h2>
+    <label for="historicalDates">Select a Date:</label>
+    <select id="historicalDates" onchange="showHistoricalContent()">
+      <option value="" disabled selected>Select a date</option>
+      <option value="independence">Independence Day: 6th March 1957</option>
+      <option value="republic">Republic Day: 1st July 1960</option>
+      <option value="nkrumah">Kwame Nkrumah Memorial Day: 21st September</option>
+      <option value="farmers">Farmers' Day: First Friday of December</option>
+    </select>
+    <div class="historical-content" id="historicalContent">
+      <div id="independence" class="hidden-content">
+        <p>On the 6th of March, 1957, Ghana made history by becoming the first sub-Saharan African country to gain independence from colonial rule. Under the charismatic leadership of Dr. Kwame Nkrumah, Ghana successfully ended British colonial rule, marking a significant milestone in the history of Africa. This event inspired a wave of independence movements across the continent, as other African nations sought to follow in Ghana's footsteps.</p>
+        <p>The path to independence was marked by the formation of the Convention People's Party (CPP) in 1949, led by Nkrumah, which advocated for immediate self-governance. Through persistent activism, protests, and political negotiations, the CPP gained substantial support, culminating in electoral victories that paved the way for the independence movement.</p>
+        <p>On the eve of independence, Nkrumah delivered a powerful speech, declaring, "At long last, the battle has ended! And thus, Ghana, your beloved country is free forever." This declaration was met with jubilant celebrations across the country, as Ghanaians from all walks of life came together to rejoice in their newfound freedom.</p>
+        <p>Independence Day is not only a celebration of Ghana's sovereignty but also a reflection on the nation's journey, resilience, and the sacrifices made by countless individuals who fought for freedom. The day is commemorated with parades, cultural displays, and various events that honor Ghana's rich heritage and the vision of its founding leaders.</p>
+        <p>Today, Independence Day serves as a reminder of Ghana's pivotal role in Africa's liberation movement and its ongoing commitment to building a prosperous and democratic society.</p>
+      </div>
+      <div id="republic" class="hidden-content">
+        <p>Republic Day marks the day Ghana became a republic and Kwame Nkrumah became its first President.</p>
+        <p>It signifies the country's complete freedom from colonial rule and the establishment of a sovereign state.</p>
+      </div>
+      <div id="nkrumah" class="hidden-content">
+        <p>This day honors the birth of Dr. Kwame Nkrumah, Ghana's first President and a key figure in the country's independence movement.</p>
+        <p>Nkrumah was a visionary leader whose efforts were crucial in the fight against colonialism and for the unification of Africa.</p>
+      </div>
+      <div id="farmers" class="hidden-content">
+        <p>Farmers' Day is celebrated to recognize and appreciate the contributions of farmers to the economy and food security of Ghana.</p>
+        <p>It includes awarding the best farmers in different categories, highlighting the importance of agriculture in national development.</p>
+      </div>
+    </div>
+    <h2>About Ghanaian Culture</h2>
+    <label for="cultureAspect">Choose a cultural aspect:</label>
+    <select id="cultureAspect" onchange="showCultureContent()">
+        <option value="">--Select--</option>
+        <option value="ethnicDiversity">Ethnic Diversity</option>
+        <option value="languages">Languages</option>
+        <option value="traditionalClothing">Traditional Clothing</option>
+        <option value="festivals">Festivals</option>
+        <option value="musicDance">Music and Dance</option>
+        <option value="cuisine">Cuisine</option>
+        <option value="religion">Religion and Beliefs</option>
+        <option value="family">Family and Social Structure</option>
+        <option value="artCraft">Art and Craft</option>
+        <option value="sports">Sports</option>
+    </select>
+    <div id="cultureContent" class="content"></div>
+  </div>
+  <div class="conversation-section">
+    <h2>Community Conversations</h2>
+    <div id="conversationForm">
+      <label for="username">Your Name:</label>
+      <input type="text" id="username" placeholder="Enter your name" required>
+      <br>
+      <label for="comment">Your Comment:</label>
+      <!-- Icon Toolbar with Emoji Button -->
+      <div class="icon-toolbar">
+        <i id="emojiBtn" class="fas fa-smile"></i> <!-- Emoji Icon -->
+      </div>
+      <textarea id="comment" rows="4" placeholder="Share your thoughts..." required></textarea>
+      <button type="submit" id="postCommentBtn">Post Comment</button>
+  </div>
+  <div id="conversationList">
+    <!-- Comments will be dynamically inserted here -->
+</div>
+
+<!-- Emoji Picker Structure -->
+<div id="emojiPicker" style="display: none;">
+    <div class="emoji-categories">
+        <button id="smileys">😀</button>
+        <button id="animals">🐻</button>
+        <button id="food">🍔</button>
+        <button id="activity">⚽</button>
+        <button id="travel">✈️</button>
+        <button id="hands">👌</button> <!-- Added Hand Signs Category Button -->
+    </div>
+    <div id="emojiList" class="emoji-list">
+        <!-- Emojis will be dynamically inserted here -->
+    </div>
+</div>
+</div>
+      
+<script>
+  const modal = document.getElementById("certificateModal");
+  const modalImg = document.getElementById("modalImage");
+  const captionText = document.getElementById("caption");
+
+  document.querySelectorAll('.cert-thumb').forEach(img => {
+    img.addEventListener('click', () => {
+      modal.style.display = "block";
+      modalImg.src = img.src;
+      captionText.textContent = img.alt;
+    });
+  });
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+</script>
+  
+   
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+  <script src="dayname.js"></script>
+ 
+
+
+</body>
+</html>

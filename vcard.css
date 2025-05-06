@@ -1,0 +1,237 @@
+/* Modern and visually appealing CSS for vCard Generator */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    text-align: center;
+}
+
+header {
+    background: linear-gradient(to right, #4CAF50, #2E8B57);
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+nav a, nav li {
+    list-style: none;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+nav a:hover, nav li:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 1000px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+.container h2 {
+    text-align: center;
+}
+
+input[type="text"], input[type="email"], input[type="tel"] {
+    width: 75%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#vCardPreview {
+    background: #e8f5e9;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#vCardPreview img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+footer {
+    background: #2E8B57;
+    color: white;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Tooltip Styling */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #007bff;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 220px;
+    background-color: #343a40; /* Darker background for better contrast */
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    bottom: 120%; /* Position above the tooltip text */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Modal Styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.6); /* Dark background */
+    overflow: auto;
+    padding-top: 60px;
+    transition: all 0.3s ease;
+}
+
+.modal-content {
+    background-color: #a4ccc9;
+    margin: 5% auto;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    font-size: 1.8em;
+    color: #333;
+    font-weight: 600;
+}
+
+.modal-content ul {
+    padding-left: 20px;
+    list-style: none;
+}
+
+.modal-content ul li {
+    margin-bottom: 10px;
+}
+
+.modal-content a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.modal-content a:hover {
+    text-decoration: underline;
+}
+
+/* Close Button Styling */
+.close {
+    color: #aaa;
+    font-size: 2em;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Modal Animation (for smooth appearance) */
+.modal.open .modal-content {
+    transform: scale(1);
+}
+
+#qrCodeContainer {
+    display: inline-block; /* Wraps tightly around the QR code */
+    border-radius: 0; /* Default square, can be adjusted */
+    transition: transform 0.3s ease-in-out;
+}
+
+
+#qrCodeContainer canvas {
+    border: none !important; /* Removes any unintended borders */
+    background: transparent !important; /* Ensures no extra background */
+}
+
+
+#qrCodeContainer:hover {
+    transform: scale(1.1);
+}

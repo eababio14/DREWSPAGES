@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireshark Packet Capture Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e2e;
+            color: #fff;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        #packetDisplay {
+            background-color: #2a2a3a;
+            border: 1px solid #444;
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+        .packet {
+            font-family: monospace;
+            margin: 5px 0;
+            padding: 5px;
+            background: #333;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button {
+            background-color: #008cba;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+        }
+        select, input {
+            padding: 5px;
+            margin: 10px;
+        }
+        .stats {
+            margin-top: 10px;
+            background: #444;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .hidden { display: none; }
+        .education-section {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+        h2 {
+            color: #008cba;
+        }
+        .education-text {
+            text-align: left;
+            line-height: 1.6;
+        }
+        .education-text ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+       /* Modal Styling */
+.modal {
+    display: none; /* Hide modal by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0); /* Black with transparency */
+    background-color: rgba(0, 0, 0, 0.4); /* Background with transparency */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #110e38;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+
+    </style>
+</head>
+<body>
+    <li><a href="landingpage.html">Home</a></li>
+    <div class="container">
+        <h1>Wireshark Packet Capture Simulator</h1>
+        <!-- Controls for Packet Capture -->
+        <button onclick="startCapture()">Start Capture</button>
+        <button onclick="stopCapture()">Stop Capture</button>
+        <button onclick="pauseCapture()">Pause</button>
+        <button onclick="resumeCapture()">Resume</button>
+        <button onclick="exportToCSV()">Export to CSV</button>
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        <br>
+
+        <!-- Filter and Search Controls -->
+        <label for="filter">Filter by Protocol:</label>
+        <select id="filter" onchange="filterPackets()">
+            <option value="ALL">ALL</option>
+            <option value="ICMP">ICMP</option>
+            <option value="TCP">TCP</option>
+            <option value="HTTP">HTTP</option>
+            <option value="ARP">ARP</option>
+            <option value="DNS">DNS</option>
+        </select>
+        <input type="text" id="search" placeholder="Search packets..." onkeyup="searchPackets()">
+        <button onclick="toggleAutoScroll()">Toggle Auto-Scroll</button>
+
+        <!-- Alert and Points Controls -->
+        <input type="checkbox" id="enableSuspiciousDetection" /> Enable Suspicious Detection
+
+        <p>Points: <span id="points">0</span></p>
+
+        <!-- Statistics Panel -->
+        <div class="stats">
+            <p><strong>Total Packets:</strong> <span id="totalPackets">0</span></p>
+            <p><strong>TCP:</strong> <span id="tcpCount">0</span> | <strong>HTTP:</strong> <span id="httpCount">0</span> | <strong>ICMP:</strong> <span id="icmpCount">0</span></p>
+        </div>
+
+        <!-- Packet Display Area -->
+        <div id="packetDisplay"></div>
+
+        
+
+        <div id="packetModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">×</span>
+                <h2>Packet Details</h2>
+                <p id="packetDetails"></p>
+                <h3>Packet Explanation</h3>
+                <p id="packetExplanation"></p>
+            </div>
+        </div>
+        
+
+      
+      
+
+       <!-- Educational Section -->
+       <div class="education-section">
+        <h2>How to Use This Simulator</h2>
+        <div class="education-text">
+            <p>This simulator mimics the functionality of Wireshark, allowing you to capture and analyze network packets in a controlled environment. Here's a quick guide:</p>
+            <ul>
+                <li><strong>Start Capture:</strong> Click the "Start Capture" button to begin capturing packets on your simulated network.</li>
+                <li><strong>Pause/Resume:</strong> You can pause and resume the capture at any time by clicking "Pause" or "Resume" buttons.</li>
+                <li><strong>Filter Packets:</strong> Use the protocol filter dropdown to view specific protocols (TCP, HTTP, ICMP, etc.) or select "ALL" to view all captured packets.</li>
+                <li><strong>Search Packets:</strong> Use the search box to find specific packets based on any text, such as source IP, destination IP, or packet type.</li>
+                <li><strong>Export Data:</strong> You can export the captured packets to a CSV file by clicking the "Export to CSV" button.</li>
+                <li><strong>Packet Details:</strong> Click on any captured packet to view detailed information, such as source and destination IP, protocol, and packet data.</li>
+            </ul>
+        </div>
+
+        <h2>Why Packet Capture is Important</h2>
+        <div class="education-text">
+            <p>Packet capture is a vital tool for understanding how data moves across a network. By analyzing the captured packets, you can:</p>
+            <ul>
+                <li>Monitor network performance and identify potential bottlenecks.</li>
+                <li>Detect network issues such as delays, dropped packets, and poor-quality connections.</li>
+                <li>Identify suspicious activities, such as unauthorized access or malware communication.</li>
+                <li>Ensure compliance with security policies by tracking communication between devices.</li>
+            </ul>
+        </div>
+
+        <h2>Real-World Scenarios for Packet Capture</h2>
+        <div class="education-text">
+            <p>Here are a few real-world scenarios where packet capture is crucial:</p>
+            <ul>
+                <li><strong>Network Troubleshooting:</strong> Packet capture helps diagnose connectivity issues, such as network slowdowns, dropouts, or misconfigurations.</li>
+                <li><strong>Security Monitoring:</strong> Packet capture is a powerful tool for detecting unusual patterns that may indicate cyber threats like DDoS attacks, unauthorized data exfiltration, or internal malicious activity.</li>
+                <li><strong>Malicious Activity Detection:</strong> By analyzing suspicious traffic, security teams can detect signs of malware, botnets, or unauthorized access.</li>
+            </ul>
+        </div>
+
+        <h2>What to Look for in Captured Packets</h2>
+        <div class="education-text">
+            <p>When analyzing network traffic, it's important to focus on the following:</p>
+            <ul>
+                <li><strong>Protocol Analysis:</strong> Ensure the captured packets correspond to expected protocols (e.g., HTTP, DNS, TCP). Anomalies may suggest security issues.</li>
+                <li><strong>Suspicious Patterns:</strong> Look for repeated connections from an unknown source, unusual destination IPs, or irregular port usage.</li>
+                <li><strong>Unusual Payloads:</strong> If the payload of a packet contains strange or encoded data, it might indicate malware communication or data exfiltration attempts.</li>
+                <li><strong>TCP Handshake:</strong> Pay close attention to the TCP handshake process (SYN, SYN-ACK, ACK) to verify legitimate connections. Anomalies in this process might indicate a DoS attack or network scan.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <script>
+    let capturing = false;
+let paused = false;
+let autoScroll = true;
+let points = 0;
+let packets = [];
+let protocolStats = { TCP: 0, HTTP: 0, ICMP: 0, ARP: 0, DNS: 0 };
+let alertsEnabled = true;
+let icmpCount = 0;
+let tcpSynCount = 0;
+let lastICMPTimestamp = 0;
+let lastTCPTimestamp = 0;
+const protocols = ["ICMP", "TCP", "HTTP", "ARP", "DNS"];
+let originalPackets = []; // Store all packets
+
+const ICMP_THRESHOLD = 5;  // Number of ICMP packets to trigger a warning within a time window
+const TCP_SYN_THRESHOLD = 5; // Number of TCP SYN packets to trigger a warning within a time window
+const TIME_WINDOW = 5000; // Time window for detecting suspicious behavior (in milliseconds)
+
+function generatePacket() {
+    let source = `192.168.1.${Math.floor(Math.random() * 255)}`;
+    let destination = `192.168.1.${Math.floor(Math.random() * 255)}`;
+    let protocol = protocols[Math.floor(Math.random() * protocols.length)];
+    let time = new Date().toLocaleTimeString();
+    let info = protocol === "ICMP" ? "Echo (ping) request" :
+               protocol === "TCP" ? "SYN (seq=0, win=64240)" :
+               protocol === "HTTP" ? "GET /index.html HTTP/1.1" :
+               protocol === "ARP" ? `Who has ${destination}? Tell ${source}` :
+               "Query A www.google.com";
+
+    let suspicious = destination === '192.168.1.255'; // Example: suspicious IP
+    return { time, source, destination, protocol, info, suspicious };
+}
+
+function startCapture() {
+    capturing = true;
+    paused = false;
+    if (packets.length === 0) {
+        originalPackets = []; // Reset original packet list if completely stopped
+    }
+    capturePackets();
+}
+
+function stopCapture() {
+    capturing = false;
+    packets = [];
+    originalPackets = [];
+    updateDisplay();
+}
+
+function pauseCapture() {
+    paused = true;
+}
+
+function resumeCapture() {
+    if (!capturing) startCapture(); // Fix: Resume even after stopping
+    paused = false;
+    capturePackets();
+}
+
+function capturePackets() {
+    if (!capturing || paused) return;
+    let packet = generatePacket();
+    packets.push(packet);
+    originalPackets.push(packet);
+    protocolStats[packet.protocol]++;
+    
+    // Only detect suspicious activity if the checkbox is checked
+    if (document.getElementById("enableSuspiciousDetection").checked) {
+        detectSuspiciousActivity(packet);
+    }
+
+    updateDisplay();
+    setTimeout(capturePackets, 1000);
+}
+
+function detectSuspiciousActivity(packet) {
+    let currentTime = Date.now();
+
+    // Detect excessive ICMP packets
+    if (packet.protocol === "ICMP") {
+        if (currentTime - lastICMPTimestamp <= TIME_WINDOW) {
+            icmpCount++;
+            if (icmpCount >= ICMP_THRESHOLD) {
+                packet.suspicious = true; // Mark as suspicious if threshold is exceeded
+            }
+        } else {
+            icmpCount = 1; // Reset count if time window passed
+        }
+        lastICMPTimestamp = currentTime;
+    }
+
+    // Detect excessive TCP SYN packets
+    if (packet.protocol === "TCP" && packet.info.includes("SYN")) {
+        if (currentTime - lastTCPTimestamp <= TIME_WINDOW) {
+            tcpSynCount++;
+            if (tcpSynCount >= TCP_SYN_THRESHOLD) {
+                packet.suspicious = true; // Mark as suspicious if threshold is exceeded
+            }
+        } else {
+            tcpSynCount = 1; // Reset count if time window passed
+        }
+        lastTCPTimestamp = currentTime;
+    }
+}
+
+function updateDisplay() {
+    let packetDisplay = document.getElementById("packetDisplay");
+    packetDisplay.innerHTML = "";
+    let filter = document.getElementById("filter").value;
+    let searchValue = document.getElementById("search").value.toLowerCase();
+
+    let filteredPackets = originalPackets
+        .filter(p => filter === "ALL" || p.protocol === filter)
+        .filter(p => JSON.stringify(p).toLowerCase().includes(searchValue));
+
+    filteredPackets.forEach(packet => {
+        let packetDiv = document.createElement("div");
+        packetDiv.classList.add("packet");
+        packetDiv.textContent = `${packet.time} | ${packet.source} → ${packet.destination} | ${packet.protocol} | ${packet.info}`;
+        if (packet.suspicious && alertsEnabled) {
+            packetDiv.style.backgroundColor = '#ff6666'; // Red for suspicious packets
+        }
+        packetDiv.onclick = () => showPacketDetails(packet);
+        packetDisplay.appendChild(packetDiv);
+    });
+
+    if (autoScroll) packetDisplay.scrollTop = packetDisplay.scrollHeight;
+
+    document.getElementById("totalPackets").textContent = packets.length;
+    document.getElementById("tcpCount").textContent = protocolStats.TCP;
+    document.getElementById("httpCount").textContent = protocolStats.HTTP;
+    document.getElementById("icmpCount").textContent = protocolStats.ICMP;
+}
+
+function filterPackets() {
+    updateDisplay();
+}
+
+function searchPackets() {
+    updateDisplay(); // No more modifying `packets`, just filtering dynamically
+}
+
+function showPacketDetails(packet) {
+    // Set packet details in the modal
+    document.getElementById("packetDetails").textContent = 
+        `Time: ${packet.time}\nSource: ${packet.source}\nDestination: ${packet.destination}\nProtocol: ${packet.protocol}\nInfo: ${packet.info}`;
+
+    // Detailed explanation based on packet type
+    let explanation = "";
+
+    // Checking if packet is suspicious and providing detailed reasons
+    if (packet.suspicious) {
+        explanation = `
+        This packet is flagged as suspicious based on several criteria:
+        - **Unusual Source**: The source IP address, ${packet.source}, is from an uncommon or unexpected region. It might be an external attacker attempting to reach an internal network.
+        - **Unusual Destination**: The packet is trying to communicate with destination ${packet.destination}, which is outside the expected range for this network.
+        - **Unusual Protocol**: The packet is using ${packet.protocol}, which is not typically used for communication with the destination system. This could be a sign of protocol abuse or exploitation.
+        - **Excessive Requests**: If this is a repeated packet or a high-frequency request, it could indicate a DDoS attack or other malicious behavior.
+        - **Malformed Packet**: The packet might have irregularities like incorrect checksums or unusual headers, suggesting it has been tampered with.
+        `;
+    } else {
+        explanation = `
+        This packet appears to be normal and does not show signs of suspicious behavior:
+        - **Source**: The source IP address, ${packet.source}, is consistent with expected traffic patterns.
+        - **Destination**: The destination, ${packet.destination}, is a known and authorized endpoint for the network.
+        - **Protocol**: The packet is using ${packet.protocol}, which is standard for this type of communication.
+        - **Content**: The info field shows ${packet.info}, a typical request type, indicating it is part of legitimate traffic.
+        - **No Anomalies**: There are no signs of packet manipulation, malformed headers, or unexpected frequency.
+        `;
+    }
+
+    // Set the explanation text in the modal
+    document.getElementById("packetExplanation").textContent = explanation;
+
+    if (packet.suspicious) {
+        points += 10;
+    } else {
+        points = Math.max(0, points - 5); // Prevent negative points
+    }
+    document.getElementById("points").textContent = points;
+
+
+    // Show the modal with detailed packet information
+    document.getElementById("packetModal").style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("packetModal").style.display = "none";
+}
+
+
+function exportToCSV() {
+    let timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+    let filename = `packets_${timestamp}.csv`;
+
+    let csvContent = "Time,Source,Destination,Protocol,Info\n" +
+        originalPackets.map(p => `${p.time},${p.source},${p.destination},${p.protocol},${p.info}`).join("\n");
+    
+    let blob = new Blob([csvContent], { type: 'text/csv' });
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+}
+
+function toggleAutoScroll() {
+    autoScroll = !autoScroll;
+    document.getElementById("autoScrollBtn").textContent = autoScroll ? "Disable Auto-Scroll" : "Enable Auto-Scroll";
+}
+
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+}
+
+function toggleAlerts() {
+    alertsEnabled = document.getElementById("alerts").checked;
+}
+
+document.getElementById("alerts").addEventListener("change", toggleAlerts);
+
+
+    </script>
+</body>
+</html>

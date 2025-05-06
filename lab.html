@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireshark Simulation</title>
+    <link rel="stylesheet" href="lab.css">
+</head>
+<body>
+    <div id="header">
+        <h1>Wireshark Packet Analyzer Simulation</h1>
+    </div>
+
+    <div id="control-panel">
+        <div class="input-group">
+            <label for="mac-address">Filter by MAC Address:</label>
+            <input type="text" id="mac-address" placeholder="e.g., 00:1C:10:B5:55:DC">
+            <button onclick="filterByMAC()">Filter</button>
+        </div>
+        <div class="input-group">
+            <label for="ssid">Filter by SSID:</label>
+            <input type="text" id="ssid" placeholder="e.g., OPENWIFI">
+            <button onclick="filterBySSID()">Filter</button>
+        </div>
+        <div class="input-group">
+            <label for="protocol">Filter by Protocol Type:</label>
+            <select id="protocol" onchange="filterByProtocol()">
+                <option value="">Select Protocol</option>
+                <option value="Beacon">Beacon</option>
+                <option value="Probe Response">Probe Response</option>
+                <option value="Data">Data</option>
+                <option value="Authentication">Authentication</option>
+                <option value="Association">Association</option>
+                <option value="Disassociation">Disassociation</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="wpa2-key">Enter WPA2 Key:</label>
+            <input type="password" id="wpa2-key" placeholder="Enter WPA2 Pre-shared Key">
+            <button onclick="decryptWPA2Packets()">Decrypt WPA2</button>
+        </div>
+
+        <!-- Controls for starting, pausing, resuming, and stopping the simulation -->
+        <div class="input-group">
+            <button onclick="startSimulation()">Start Simulation</button>
+            <button onclick="pauseSimulation()">Pause Simulation</button>
+            <button onclick="resumeSimulation()">Resume Simulation</button>
+            <button onclick="stopSimulation()">Stop Simulation</button>
+        </div>
+    </div>
+
+    <div id="packet-capture">
+        <div id="packet-list">
+            <!-- Packets will be displayed here -->
+        </div>
+    </div>
+
+    <div id="packet-detail">
+        <h2>Packet Details</h2>
+        <div id="packet-detail-info">
+            <!-- Detailed packet information will be displayed here -->
+        </div>
+    </div>
+
+    <div id="network-traffic-chart">
+        <canvas id="traffic-chart"></canvas>
+    </div>
+  
+  <div id="score"></div>
+<div id="challenges"></div>
+<!-- Modal Structure for Instructions -->
+<div id="instructions-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Task Completion Guide</h2>
+        <p>Follow the steps below to complete the task and earn a grade:</p>
+        
+        <ol>
+            <li><strong>Review the Challenge</strong>: Read through the challenge description provided in the task section. Each challenge is clearly described with the task and expected outcome.</li>
+            <li><strong>Attempt the Task</strong>: Complete the task based on the instructions. You will need to interact with the application or solve the given problem using the provided tools.</li>
+            <li><strong>Submit Your Work</strong>: Once you believe the task is completed, click the "Submit" button to record your answer. Make sure to check your work before submitting it.</li>
+            <li><strong>Check Your Score</strong>: After submission, check the score that will be displayed on the "Score" section of the page. This shows how well you've performed.</li>
+            <li><strong>Review Feedback</strong>: If there is any feedback or grading comments, they will be provided after your submission is processed. Review them carefully to improve your future attempts.</li>
+            <li><strong>Repeat if Needed</strong>: If your grade isn't satisfactory, feel free to go back and attempt the task again. Revisit the instructions, improve your understanding, and resubmit.</li>
+        </ol>
+
+        <p>If you have any questions or need clarification, feel free to ask for help!</p>
+    </div>
+</div>
+  <!-- Modal Structure for Hints -->
+<div id="hints-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Hints for Task Completion</h2>
+        <p>Here are some hints to help you with answering the questions:</p>
+        
+        <ul id="hints-list">
+            <!-- Hints will be dynamically added here -->
+        </ul>
+
+        <p>If you need more guidance, feel free to ask for help!</p>
+    </div>
+</div>
+  
+  <!-- Cheat Sheet Modal -->
+<div id="cheatSheetModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeCheatSheet()">×</span>
+        <h2>Cheat Sheet</h2>
+        <div class="cheat-sheet-content">
+            <h3>WPA2 Key</h3>
+            <p>The correct WPA2 key for decrypting packets is: <strong>WPA2Password123</strong></p>
+
+            <h3>Packet Protocols</h3>
+            <ul>
+                <li><strong>Beacon:</strong> Used to advertise the presence of a Wi-Fi network.</li>
+                <li><strong>Probe Response:</strong> A response to a probe request for a specific network.</li>
+                <li><strong>Authentication:</strong> Frame used to authenticate a client with the access point.</li>
+                <li><strong>Association:</strong> Frame used to associate a client with the access point.</li>
+                <li><strong>Disassociation:</strong> Frame used to disconnect a client from the access point.</li>
+                <li><strong>Data:</strong> Represents encrypted data packets.</li>
+                <li><strong>Management:</strong> Frames related to network management (e.g., Beacon, Authentication, etc.).</li>
+                <li><strong>Data:</strong> Contains actual user data, such as packets carrying the encrypted traffic.</li>
+            </ul>
+
+            <h3>Challenges</h3>
+            <ul>
+                <li><strong>WPA2 Key Challenge:</strong> Enter the correct WPA2 key to decrypt the packets (WPA2Password123).</li>
+                <li><strong>Packet Filtering Challenge:</strong> Filter packets by 'Authentication' protocol to complete.</li>
+                <li><strong>Packet Details Challenge:</strong> View packet details by clicking "View Details" on a packet to complete.</li>
+                <li><strong>SSID Filter Challenge:</strong> Filter packets by SSID, such as 'OPENWIFI'.</li>
+                <li><strong>MAC Address Filter Challenge:</strong> Filter packets by MAC address starting with '00:1C:10'.</li>
+                <li><strong>Probe Response Challenge:</strong> Identify and filter packets based on the 'Probe Response' protocol.</li>
+                <li><strong>Disassociation Packet Challenge:</strong> View the packet details of a 'Disassociation' packet.</li>
+                <li><strong>Association Request Challenge:</strong> View the details of an 'Association Request' packet.</li>
+                <li><strong>Beacon Frame Challenge:</strong> Filter packets by the 'Beacon' protocol to complete.</li>
+                <li><strong>Encrypted Data Challenge:</strong> Identify encrypted packets and check if WPA2 decryption works correctly.</li>
+                <li><strong>SSID 'FiOS-RXJ6L' Challenge:</strong> Analyze the packet with SSID 'FiOS-RXJ6L'.</li>
+                <li><strong>Packet Flow After Decryption Challenge:</strong> Check packet flow after WPA2 decryption is applied.</li>
+                <li><strong>Time-based Filter Challenge:</strong> Filter packets by capture time, e.g., '00:00:01'.</li>
+                <li><strong>Packet Type Challenge:</strong> Analyze and distinguish between 'Management' and 'Data' packet types.</li>
+                <li><strong>Protocol Combination Challenge:</strong> Filter packets based on both 'Authentication' and 'Association' protocols.</li>
+                <li><strong>Beacon vs Probe Response Challenge:</strong> Compare the 'Beacon Frame' with the 'Probe Response' for differences.</li>
+                <li><strong>Source MAC Address Challenge:</strong> Identify the source MAC address of packets containing 'Encrypted WPA2 Data'.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+  
+  <!-- Keywords Explanation Modal -->
+<div id="keywordsModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeKeywordsModal()">×</span>
+        <h2>Key Concepts & Keywords</h2>
+        <div class="keywords-content">
+            <h3>Key Terms and Concepts</h3>
+            <ul>
+                <li><strong>WPA2 (Wi-Fi Protected Access 2):</strong> A security protocol used to secure wireless networks. WPA2 uses advanced encryption (AES) to protect data sent over the network. It is commonly used in modern Wi-Fi networks to prevent unauthorized access.</li>
+                <li><strong>WPA2 Key:</strong> A password or passphrase used to authenticate and encrypt data in WPA2-secured networks. This key is essential for decrypting data captured in packet analysis.</li>
+                <li><strong>Packet:</strong> A unit of data transmitted over a network. Packets contain both the data being sent and metadata such as source/destination addresses and protocol information.</li>
+                <li><strong>Packet Sniffing:</strong> The act of capturing network packets to analyze traffic. This technique can help identify security vulnerabilities or monitor network behavior.</li>
+                <li><strong>Beacon Frame:</strong> A type of management frame in the IEEE 802.11 standard, used by access points to advertise their presence to nearby devices. It contains important information like the network's SSID (name) and supported features.</li>
+                <li><strong>Probe Request/Response:</strong> When a device (client) sends a probe request to search for available Wi-Fi networks, access points reply with a probe response, which includes details about the network (SSID, capabilities, etc.).</li>
+                <li><strong>Authentication Frame:</strong> A frame used in the process of connecting a device to a Wi-Fi network. It’s part of the handshake process between the client and the access point.</li>
+                <li><strong>Association Frame:</strong> Sent by a client after successful authentication to associate with the network. It’s used to establish a connection and allow data transfer.</li>
+                <li><strong>Disassociation Frame:</strong> A frame used to disconnect a device from the access point. This can be initiated by either the client or the access point.</li>
+                <li><strong>Data Frame:</strong> A frame that carries actual data between devices on a network. Data frames are typically encrypted for security purposes.</li>
+                <li><strong>Packet Filtering:</strong> A technique used to selectively view packets based on certain criteria, such as protocol type (e.g., Authentication, Association, etc.), source or destination IP address, or other packet metadata.</li>
+                <li><strong>Encryption:</strong> The process of converting data into a coded form to prevent unauthorized access. In this lab, the WPA2 key is used to decrypt encrypted packets.</li>
+                <li><strong>Handshake:</strong> A process in WPA2 where the client and access point exchange authentication information, which is later used to derive the encryption keys for the session. The 4-way handshake is critical for WPA2 security.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Button to Open Modal -->
+<button id="open-hints-btn">View Hints</button>
+<button onclick="openKeywordsModal()">Open Key Concepts</button>
+
+
+<!-- Button to Open Modal -->
+<button id="open-instructions-btn">View Instructions</button>
+  <button id="showCheatSheetButton">Show Cheat Sheet</button>
+  <button id="resetChallengesButton">Reset Challenges</button>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="labt.js"></script>
+</body>
+</html>

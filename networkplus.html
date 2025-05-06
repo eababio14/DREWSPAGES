@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Network Plus Certification Exam</title>
+  <link rel="stylesheet" href="secexam.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <nav>
+        <ul>
+          <button id="infoBtn" class="info-button">Network+ Exam Info</button>
+          <li><a href="secexam.html">Security+</a></li>
+            <li><a href="landingpage.html">Home</a></li>
+            <li><a href="packsuspi.html">Packet capture Simulator</a></li>
+            <li><a href="wsp.html">Wiresless Security & Penetration Testing Lab</a></li>
+            <li><a href="net.html">Network Security Simulation Lab</a></li>
+        </ul>
+    </nav>
+
+    <div class="certificate-preview-section">
+      <h2>Certificate Previews</h2>
+      <div class="certificate-preview-grid">
+        <img src="networkcert.png" alt="Traditional Kente Theme" class="cert-thumb" />
+        
+      </div>
+    </div>
+    <!-- Scoped Modal -->
+    <div id="certificateModal" class="modal-preview">
+      <span class="close-preview" onclick="closeModal()">&times;</span>
+      <img class="modal-content-preview" id="modalImage" />
+      <div id="caption"></div>
+    </div>
+
+<h1>Network Plus Certification Exam</h1>
+
+<div style="text-align:center;">
+  <button id="startQuizBtn">Start Quiz</button>
+</div>
+
+<div id="questionContainer"></div>
+
+<div style="text-align:center; margin-top: 20px;">
+  <button id="prevBtn">Previous</button>
+  <button id="nextBtn">Next</button>
+  <br><br>
+  <button id="submitBtn">Submit Quiz</button>
+</div>
+
+<div id="progress" style="text-align:center; margin-top:10px;">
+  <span>Question <span id="current-question">0</span> of <span id="total-questions">0</span></span>
+</div>
+
+<div id="result" class="hidden" style="text-align:center;">
+  <h2>Quiz Result</h2>
+  <p id="resultText"></p>
+  <button id="reviewResultsBtn">Review Answers</button>
+  <div id="certificateActions" class="hidden" style="margin-top: 10px;">
+    <input type="text" id="username" placeholder="Enter your name for certificate" style="padding:8px;">
+    <br><br>
+    <button id="generateCert">Generate Certificate</button>
+  </div>
+</div>
+
+<div id="quizResults" class="hidden">
+  <h2>Quiz Review</h2>
+  <div id="resultsSummary"></div>
+  <div style="text-align:center; margin-top: 20px;">
+    <button id="printResultsBtn">Print Results</button>
+    <button id="closeResultsBtn">Close Review</button>
+    <button id="retakeQuizBtn">Retake Quiz</button>
+  </div>
+</div>
+
+<!-- Certificate Modal -->
+<div id="certificateModal" class="hidden">
+  <h2 style="text-align:center;">Certificate of Completion</h2>
+  <p style="text-align:center;">This certifies that <strong id="certName"></strong></p>
+  <p style="text-align:center;">has successfully completed the Security Analyst Course</p>
+  <p style="text-align:center;">Date: <span id="certDate"></span></p>
+  <p style="text-align:center;">Certificate Number: <span id="certNumber"></span></p>
+
+  <div style="text-align:center; margin-top:20px;">
+    <button onclick="shareOnFacebook()">Share on Facebook</button>
+    <button onclick="shareOnTwitter()">Share on Twitter</button>
+    <button onclick="shareOnLinkedIn()">Share on LinkedIn</button>
+    <button id="closeCert">Close Certificate</button>
+  </div>
+</div>
+
+<!-- Exam Information Modal -->
+<div id="examInfoModal" class="exam-info-modal modal hidden">
+  <div class="modal-content">
+    <span class="close" id="closeExamInfo">&times;</span>
+    <h2>About the Network+ Exam</h2>
+    <p>This certification exam is designed to assess your knowledge of networking concepts including protocols, topologies, devices, security, and troubleshooting. The exam consists of up to 50 multiple-choice questions randomly selected from a broader question bank.</p>
+    <ul>
+      <li>You must score at least <strong>80%</strong> to pass and receive a certificate.</li>
+      <li>Each question has one correct answer.</li>
+      <li>You can navigate back and forth between questions.</li>
+      <li>Once submitted, you can review your answers and explanations.</li>
+    </ul>
+    <p>Good luck! Click "Start Quiz" when you're ready.</p>
+
+    <div class="career-impact-box">
+      <h3>Career Impact</h3>
+      <p>
+        The knowledge gained from this course equips individuals with a strong foundation in networking fundamentals such as <strong>IP addressing</strong>, <strong>routing and switching</strong>, <strong>network security</strong>, and <strong>network troubleshooting</strong>.
+      </p>
+      <p>
+        These skills are directly applicable to a variety of entry-level and intermediate roles in IT and cybersecurity, including:
+      </p>
+      <ul>
+        <li><strong>Network Technician</strong></li>
+        <li><strong>IT Support Specialist</strong></li>
+        <li><strong>Systems Administrator</strong></li>
+        <li><strong>Junior Network Analyst</strong></li>
+      </ul>
+      <p>
+        Completing the course and earning the accompanying certificate validates your technical competency and demonstrates to employers that you are prepared to contribute effectively in IT and network-based roles.
+      </p>
+    </div>
+  </div>
+</div> 
+
+
+
+<script>
+  const modal = document.getElementById("certificateModal");
+  const modalImg = document.getElementById("modalImage");
+  const captionText = document.getElementById("caption");
+
+  document.querySelectorAll('.cert-thumb').forEach(img => {
+    img.addEventListener('click', () => {
+      modal.style.display = "block";
+      modalImg.src = img.src;
+      captionText.textContent = img.alt;
+    });
+  });
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+</script>
+  
+
+<script src="networkplus.js"></script>
+
+</body>
+</html>

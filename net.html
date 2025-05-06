@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Security Simulation</title>
+    <link rel="stylesheet" href="net.css">
+</head>
+<body>
+    <header style="background-color: #333; color: #fff; padding: 20px; text-align: center; font-family: 'Arial', sans-serif;">
+        <h1 style="margin: 0;"></h1>
+        <nav style="margin-top: 10px;">
+          <a href="landingpage.html" style="color: #fff; text-decoration: none; margin: 0 15px;">Home</a>
+          <a href="secexam.html" style="color: #fff; text-decoration: none; margin: 0 15px;">Security+</a>
+          <a href="networkplus.html" style="color: #fff; text-decoration: none; margin: 0 15px;">Network+</a>
+          <button type="button" id="open-modal-btn">Command Explanations</button>
+          <button type="button" id="open-resume-modal-btn">Resume Information</button>
+          
+        </nav>
+  </header>
+    <div class="container">
+        <div class="guide">
+            <h1>Network Security Simulation Guide</h1>
+            <p>Welcome to the Network Security Simulation! This simulation will help you understand how to configure and manage network services on a Linux machine. Follow the steps below to get started:</p>
+            <ol>
+                <li>Type commands in the terminal input field and press Enter to execute them.</li>
+              <li>Type help in the commands terminal input and press enter to view all commands.</li>
+                <li>Use commands like <code>nmap</code>, <code>netstat</code>, <code>service</code>, <code>apache2ctl</code>, <code>ssh-keygen</code>, and <code>/etc/init.d/ssh start</code> to interact with the system.</li>
+                <li>Observe the output in the terminal to understand the status of various services and network configurations.</li>
+                <li>Please note that not all available commands are explained in the step-by-step instructions. Please type "help" in the command inteface to see additional commands.</li>
+            </ol>
+            <h2>Step-by-Step Instructions</h2>
+            <ol>
+                <li>**Scan for open ports**:
+                    <ul>
+                        <li>Type <code>nmap 127.0.0.1</code> and press Enter.</li>
+                        <li>Observe the output to see which ports are open.</li>
+                    </ul>
+                </li>
+                <li>**View running services**:
+                    <ul>
+                        <li>Type <code>netstat -tan</code> and press Enter.</li>
+                        <li>Observe the output to see the active internet connections.</li>
+                    </ul>
+                </li>
+                <li>**Start VSFTPD service**:
+                    <ul>
+                        <li>Type <code>service vsftpd start</code> and press Enter.</li>
+                        <li>Check the output to confirm the service has started.</li>
+                    </ul>
+                </li>
+                <li>**Start Apache web server**:
+                    <ul>
+                        <li>Type <code>apache2ctl start</code> and press Enter.</li>
+                        <li>Check the output to confirm the web server has started.</li>
+                    </ul>
+                </li>
+                <li>**Generate SSH keys**:
+                    <ul>
+                        <li>Type <code>ssh-keygen</code> and press Enter.</li>
+                        <li>Hit Enter three times to accept the default settings.</li>
+                        <li>Observe the output to confirm the keys have been generated.</li>
+                    </ul>
+                </li>
+                <li>**Start SSH service**:
+                    <ul>
+                        <li>Type <code>/etc/init.d/ssh start</code> and press Enter.</li>
+                        <li>Check the output to confirm the SSH service has started.</li>
+                    </ul>
+                </li>
+                <li>**View running services again**:
+                    <ul>
+                        <li>Type <code>netstat -tan</code> and press Enter.</li>
+                        <li>Observe the output to see the updated list of active internet connections.</li>
+                    </ul>
+                </li>
+                <li>**Install and start MySQL service**:
+                    <ul>
+                        <li>Type <code>apt-get install mysql-server</code> and press Enter.</li>
+                        <li>Follow the prompts to complete the installation.</li>
+                        <li>Type <code>service mysql start</code> and press Enter.</li>
+                        <li>Check the output to confirm the MySQL service has started.</li>
+                    </ul>
+                </li>
+                <li>**Create a new user in MySQL**:
+                    <ul>
+                        <li>Type <code>mysql -u root -p</code> and press Enter.</li>
+                        <li>Enter the root password when prompted.</li>
+                        <li>Type <code>CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';</code> and press Enter.</li>
+                        <li>Type <code>GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost';</code> and press Enter.</li>
+                        <li>Type <code>FLUSH PRIVILEGES;</code> and press Enter.</li>
+                        <li>Type <code>EXIT;</code> and press Enter.</li>
+                    </ul>
+                </li>
+                <li>**Install and configure UFW (Uncomplicated Firewall)**:
+                    <ul>
+                        <li>Type <code>apt-get install ufw</code> and press Enter.</li>
+                        <li>Type <code>ufw allow 22</code> and press Enter to allow SSH connections.</li>
+                        <li>Type <code>ufw allow 80</code> and press Enter to allow HTTP connections.</li>
+                        <li>Type <code>ufw allow 3306</code> and press Enter to allow MySQL connections.</li>
+                        <li>Type <code>ufw enable</code> and press Enter to enable the firewall.</li>
+                        <li>Check the output to confirm the firewall rules have been applied.</li>
+                    </ul>
+                </li>
+            </ol>
+            <h2>What You Will Learn</h2>
+            <ul>
+                <li>How to scan for open ports using <code>nmap</code>.</li>
+                <li>How to view running services using <code>netstat</code>.</li>
+                <li>How to start and manage services like VSFTPD, Apache, SSH, and MySQL.</li>
+                <li>How to generate SSH keys for secure communication.</li>
+                <li>How to create and manage users in MySQL.</li>
+                <li>How to configure and manage a firewall using UFW.</li>
+            </ul>
+            <h2>Applying This Knowledge in the Real World</h2>
+            <p>By using this simulation, you will gain practical experience in managing network services on a Linux machine. This knowledge can be applied in various real-world scenarios, such as:</p>
+            <ul>
+                <li>Setting up secure file transfer services in a corporate environment.</li>
+                <li>Configuring web servers to host websites and applications.</li>
+                <li>Implementing secure remote access using SSH.</li>
+                <li>Performing network scans to identify potential security vulnerabilities.</li>
+                <li>Managing databases and users in MySQL.</li>
+                <li>Configuring and managing firewalls to enhance network security.</li>
+            </ul>
+        </div>
+        <div class="terminal">
+            <div class="terminal-header">
+                <span class="title">Terminal</span>
+                <button id="clear-btn">Clear</button>
+            </div>
+            <div class="terminal-body" id="terminal-body">
+                <pre id="output"></pre>
+                <input type="text" id="command-input" placeholder="Type your command here...">
+            </div>
+        </div>
+    </div>
+
+    <div class="quiz">
+        <h2>Quiz Section</h2>
+        <p>Test your knowledge with the following questions:</p>
+        <form id="quiz-form">
+            <ol>
+                <li>
+                    What command is used to scan for open ports on a remote machine?
+                    <ul>
+                        <li><input type="radio" name="q1" value="a"> netstat -tan</li>
+                        <li><input type="radio" name="q1" value="b"> nmap 127.0.0.1</li>
+                        <li><input type="radio" name="q1" value="c"> service vsftpd start</li>
+                    </ul>
+                </li>
+                <li>
+                    How do you view the current running services on a Linux machine?
+                    <ul>
+                        <li><input type="radio" name="q2" value="a"> nmap 127.0.0.1</li>
+                        <li><input type="radio" name="q2" value="b"> netstat -tan</li>
+                        <li><input type="radio" name="q2" value="c"> ssh-keygen</li>
+                    </ul>
+                </li>
+                <li>
+                    Which command starts the VSFTPD service?
+                    <ul>
+                        <li><input type="radio" name="q3" value="a"> apache2ctl start</li>
+                        <li><input type="radio" name="q3" value="b"> service vsftpd start</li>
+                        <li><input type="radio" name="q3" value="c"> /etc/init.d/ssh start</li>
+                    </ul>
+                </li>
+                <li>
+                    What is the command to generate SSH keys?
+                    <ul>
+                        <li><input type="radio" name="q4" value="a"> ssh-keygen</li>
+                        <li><input type="radio" name="q4" value="b"> apt-get install mysql-server</li>
+                        <li><input type="radio" name="q4" value="c"> ufw enable</li>
+                     </ul>
+                </li>
+                <li>
+                    How do you start the Apache web server?
+                    <ul>
+                        <li><input type="radio" name="q5" value="a"> service vsftpd start</li>
+                        <li><input type="radio" name="q5" value="b"> apache2ctl start</li>
+                        <li><input type="radio" name="q5" value="c"> mysql -u root -p</li>
+                    </ul>
+                </li>
+                <li>
+                    What command is used to create a new user in MySQL?
+                    <ul>
+                        <li><input type="radio" name="q6" value="a"> CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';</li>
+                        <li><input type="radio" name="q6" value="b"> GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost';</li>
+                        <li><input type="radio" name="q6" value="c"> FLUSH PRIVILEGES;</li>
+                    </ul>
+                </li>
+                <li>
+                    How do you enable the UFW firewall?
+                    <ul>
+                        <li><input type="radio" name="q7" value="a"> ufw allow 22</li>
+                        <li><input type="radio" name="q7" value="b"> ufw enable</li>
+                        <li><input type="radio" name="q7" value="c"> apt-get install ufw</li>
+                    </ul>
+                </li>
+            </ol>
+            <button type="button" id="submit-quiz-btn">Submit Quiz</button>
+            <button type="button" id="reset-quiz-btn">Reset Quiz</button>
+        </form>
+        <div id="quiz-results" style="display: none;">
+            <h3>Quiz Results</h3>
+            <p id="quiz-score"></p>
+        </div>
+    </div>
+</div>
+
+ <!-- Modal Trigger Button -->
+ 
+
+ <!-- Modal -->
+ <div id="command-modal" class="modal">
+     <div class="modal-content">
+         <span class="close-btn">&times;</span>
+         <h2>Command Explanations</h2>
+         <ul>
+             <li><strong>nmap 127.0.0.1:</strong> Used to scan for open ports on a remote machine.</li>
+             <li><strong>netstat -tan:</strong> Displays active internet connections and listening ports.</li>
+             <li><strong>service vsftpd start:</strong> Starts the VSFTPD (Very Secure FTP Daemon) service.</li>
+             <li><strong>apache2ctl start:</strong> Starts the Apache web server.</li>
+             <li><strong>ssh-keygen:</strong> Generates SSH keys for secure communication.</li>
+             <li><strong>/etc/init.d/ssh start:</strong> Starts the SSH service.</li>
+             <li><strong>service mysql start:</strong> Starts the MySQL database server.</li>
+             <li><strong>mysql -u root -p:</strong> Logs into MySQL as the root user.</li>
+             <li><strong>CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';</strong> Creates a new user in MySQL.</li>
+             <li><strong>GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost';</strong> Grants all privileges to the new MySQL user.</li>
+             <li><strong>FLUSH PRIVILEGES;</strong> Applies changes made to user privileges in MySQL.</li>
+             <li><strong>apt-get install ufw:</strong> Installs the Uncomplicated Firewall (UFW) package.</li>
+             <li><strong>ufw allow 22:</strong> Allows SSH connections through the firewall.</li>
+             <li><strong>ufw allow 80:</strong> Allows HTTP connections through the firewall.</li>
+             <li><strong>ufw allow 3306:</strong> Allows MySQL connections through the firewall.</li>
+             <li><strong>ufw enable:</strong> Enables the UFW firewall.</li>
+             <li><strong>df -h:</strong> Displays disk space usage.</li>
+            <li><strong>systemctl status apache2:</strong> Shows the status of the Apache service.</li>
+            <li><strong>systemctl restart apache2:</strong> Restarts the Apache service.</li>
+            <li><strong>top:</strong> Shows the top processes running on the system.</li>
+            <li><strong>ps aux:</strong> Lists all running processes with their details.</li>
+            <li><strong>useradd newuser:</strong> Adds a new user to the system.</li>
+            <li><strong>passwd newuser:</strong> Changes the password for the new user.</li>
+            <li><strong>shutdown now:</strong> Shuts down the system.</li>
+            <li><strong>reboot:</strong> Reboots the system.</li>
+
+         </ul>
+     </div>
+ </div>
+</div>
+
+
+
+<!-- Modal -->
+<div id="resume-modal" class="resume-modal">
+    <div class="resume-modal-content">
+        <span class="resume-close-btn">&times;</span>
+        <h2>Resume Information</h2>
+        <p>Copy and paste the following sections into your resume to showcase your network security skills and experience:</p>
+        <div class="resume-section">
+            <h3>Network Security Skills</h3>
+            <p><strong>Network Security Simulation Experience</strong></p>
+            <ul>
+                <li><strong>Port Scanning and Network Analysis:</strong> Utilized `nmap` to scan for open ports on remote machines, identifying potential security vulnerabilities. Employed `netstat -tan` to view active internet connections and listening ports, ensuring network integrity.</li>
+                <li><strong>Service Management:</strong> Configured and started essential network services including VSFTPD (`service vsftpd start`), Apache (`apache2ctl start`), and SSH (`/etc/init.d/ssh start`). Generated SSH keys using `ssh-keygen` for secure communication and remote access.</li>
+                <li><strong>Database Administration:</strong> Installed and managed MySQL server (`apt-get install mysql-server`, `service mysql start`). Created and managed MySQL users (`mysql -u root -p`, `CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';`, `GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost';`, `FLUSH PRIVILEGES;`).</li>
+                <li><strong>Firewall Configuration:</strong> Installed and configured UFW (Uncomplicated Firewall) (`apt-get install ufw`). Set firewall rules to allow specific connections (`ufw allow 22`, `ufw allow 80`, `ufw allow 3306`). Enabled UFW to enhance network security (`ufw enable`).</li>
+            </ul>
+            <p><strong>Technical Proficiency:</strong></p>
+            <ul>
+                <li><strong>Tools:</strong> Nmap, Netstat, VSFTPD, Apache, SSH, MySQL, UFW</li>
+                <li><strong>Operating Systems:</strong> Linux (Kali, Ubuntu), Windows</li>
+            </ul>
+        </div>
+        <div class="resume-section">
+            <h3>Network Security Skills</h3>
+            <p><strong>Network Security Simulation Experience</strong></p>
+            <ul>
+                <li><strong>Network Scanning:</strong> Conducted comprehensive port scans using `nmap` to identify open ports and services on remote machines. Analyzed network connections and listening ports with `netstat -tan` to ensure secure and efficient network operations.</li>
+                <li><strong>Service Configuration:</strong> Successfully started and managed network services such as VSFTPD (`service vsftpd start`), Apache (`apache2ctl start`), and SSH (`/etc/init.d/ssh start`). Implemented secure communication protocols by generating SSH keys with `ssh-keygen`.</li>
+                <li><strong>Database Management:</strong> Installed MySQL server (`apt-get install mysql-server`) and initiated the service (`service mysql start`). Administered MySQL databases, creating users (`CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';`) and granting privileges (`GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost';`).</li>
+                <li><strong>Firewall Setup:</strong> Configured UFW (Uncomplicated Firewall) to enhance network security (`apt-get install ufw`). Established firewall rules to permit necessary connections (`ufw allow 22`, `ufw allow 80`, `ufw allow 3306`). Activated UFW to protect network infrastructure (`ufw enable`).</li>
+            </ul>
+            <p><strong>Technical Skills:</strong></p>
+            <ul>
+                <li><strong>Tools:</strong> Nmap, Netstat, VSFTPD, Apache, SSH, MySQL, UFW</li>
+                <li><strong>Operating Systems:</strong> Linux (Kali, Ubuntu), Windows</li>
+            </ul>
+        </div>
+        <div class="resume-section">
+            <h3>Network Security Skills</h3>
+            <p><strong>Network Security Simulation Experience</strong></p>
+            <ul>
+                <li><strong>Port Scanning:</strong> Utilized `nmap` for detailed port scanning to detect open ports and services on remote systems. Monitored network connections and listening ports using `netstat -tan` to maintain network security.</li>
+                <li><strong>Service Management:</strong> Configured and started critical network services including VSFTPD (`service vsftpd start`), Apache (`apache2ctl start`), and SSH (`/etc/init.d/ssh start`). Generated SSH keys with `ssh-keygen` to ensure secure remote access.</li>
+                <li><strong>Database Administration:</strong> Installed and managed MySQL server (`apt-get install mysql-server`, `service mysql start`). Created and managed MySQL users (`mysql -u root -p`, `CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';`, `GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost';`, `FLUSH PRIVILEGES;`).</li>
+                <li><strong>Firewall Configuration:</strong> Installed and configured UFW (Uncomplicated Firewall) (`apt-get install ufw`). Set firewall rules to allow specific connections (`ufw allow 22`, `ufw allow 80`, `ufw allow 3306`). Enabled UFW to enhance network security (`ufw enable`).</li>
+            </ul>
+            <p><strong>Technical Proficiency:</strong></p>
+            <ul>
+                <li><strong>Tools:</strong> Nmap, Netstat, VSFTPD, Apache, SSH, MySQL, UFW</li>
+                <li><strong>Operating Systems:</strong> Linux (Kali, Ubuntu), Windows</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+
+<footer style="background-color: #333; color: #fff; padding: 20px; text-align: center; font-family: 'Arial', sans-serif;">
+    <p style="margin: 0;">&copy; 2025 Your Company Name. All rights reserved.</p>
+    <div style="margin-top: 10px;">
+      <a href="#privacy" style="color: #fff; text-decoration: none; margin: 0 15px;">Privacy Policy</a>
+      <a href="#terms" style="color: #fff; text-decoration: none; margin: 0 15px;">Terms of Service</a>
+    </div>
+  </footer>
+    <script src="net.js"></script>
+</body>
+</html>

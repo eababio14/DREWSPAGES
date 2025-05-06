@@ -1,0 +1,192 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drew's Pages</title>
+    <link rel="stylesheet" href="modernizedqrcode.css">
+   
+</head>
+<body>
+  <div class="container">
+      <header>
+          <div class="logo-section">
+              <h1>Drew's Pages</h1>
+          </div>
+          <nav>
+              <li><a href="landingpage.html">Home</a></li>
+              <a href="realtimeinv.html">Invoice Generator</a>
+              <li><a href="logo.html">Logo generator</a></li>
+              <li><a href="ccnt.html">Currency Coverter</a></li>
+              <a href="vcard.html">Vcard QRcodes</a>
+              <button onclick="signOut()">Sign Out</button>
+          </nav>
+      </header>
+     <main>
+          <div id="qrSection">
+              <h2>Create a Custom QR Code</h2>
+
+              <!-- Logo Upload Section -->
+              <div class="input-group">
+                  <label for="logoUpload">Upload Logo (Optional):</label>
+                  <input type="file" id="logoUpload" accept="image/*" onchange="previewLogo()" />
+              </div>
+              <label for="logoFrameStyle">Frame Style:</label>
+<select id="logoFrameStyle">
+    <option value="solid">Solid</option>
+    <option value="dashed">Dashed</option>
+    <option value="dotted">Dotted</option>
+    <option value="double">Double</option>
+    <option value="circle">Circular</option>
+</select>
+              
+
+<label for="logoFrameColor">Frame Color:</label>
+<input type="color" id="logoFrameColor" value="#000000">
+
+<label for="logoFrameWidth">Frame Width:</label>
+<input type="number" id="logoFrameWidth" value="5" min="1">
+
+
+              
+
+
+              <!-- Text or URL input to generate QR code -->
+              <div class="input-group">
+                  <label for="qrText">Enter Text/URL for QR Code:</label>
+                  <input type="text" id="qrText" placeholder="Enter URL or text here" />
+                  <input type="text" id="customFileName" placeholder="Enter custom file name">
+              </div>
+
+              <div class="input-group">
+                <label for="qrBgColor">QR Code Background Color:</label>
+                <input type="color" id="qrBgColor" value="#ffffff">
+              </div>
+              <div class="input-group">
+                <label for="qrFgColor">QR Code Foreground Color:</label>
+                <input type="color" id="qrFgColor" value="#000000">
+              </div>
+            
+
+              
+              
+  <!-- Custom Name Styling -->
+  <div class="input-group">
+    <label for="customFont">Custom Name Font:</label>
+    <select id="customFont">
+      <option value="sans-serif" selected>Sans-serif</option>
+      <option value="serif">Serif</option>
+      <option value="monospace">Monospace</option>
+      <option value="cursive">Cursive</option>
+      <option value="fantasy">Fantasy</option>
+      <option value="Arial, sans-serif">Arial</option>
+      <option value="Times New Roman, serif">Times New Roman</option>
+      <option value="Courier New, monospace">Courier New</option>
+      <option value="Georgia, serif">Georgia</option>
+      <option value="Verdana, sans-serif">Verdana</option>
+      <option value="Trebuchet MS, sans-serif">Trebuchet MS</option>
+      <option value="Comic Sans MS, cursive">Comic Sans MS</option>
+    </select>
+  </div>
+  <div class="input-group">
+    <label for="customFontSize">Custom Name Font Size (px):</label>
+    <input type="number" id="customFontSize" value="20" min="10" max="50">
+  </div>
+  <div class="input-group">
+    <label for="customNameColor">Custom Name Color:</label>
+    <input type="color" id="customNameColor" value="#000000">
+  </div>
+  
+  <!-- Logo Styling Options -->
+  <div class="input-group">
+    <label for="logoSize">Logo Size (as percentage of QR Code):</label>
+    <input type="range" id="logoSize" min="10" max="50" value="25">
+  </div>
+
+  <!-- Border Customization Inputs -->
+<label for="borderWidth">Border Width (px):</label>
+<input type="number" id="borderWidth" value="10" min="0" max="50">
+
+<label for="borderColor">Border Color:</label>
+<input type="color" id="borderColor" value="#000000">
+
+<label for="borderStyle">Border Style:</label>
+<select id="borderStyle">
+    <option value="solid">Solid</option>
+    <option value="dashed">Dashed</option>
+    <option value="dotted">Dotted</option>
+    <option value="double">Double</option>
+    <option value="groove">Groove</option>
+    <option value="ridge">Ridge</option>
+    <option value="inset">Inset</option>
+    <option value="outset">Outset</option>
+    <option value="none">None</option>
+    <option value="hidden">Hidden</option>
+</select>
+
+<div>
+  <label>QR Code Size:</label>
+  <input type="number" id="qrSize" value="256" min="100" max="500">
+</div>
+
+
+
+
+              <button class="btn primary" onclick="generateQRCode()">Generate QR Code</button>
+
+              <!-- Display QR Code -->
+              <div id="qrCodeContainer">
+                  <img id="qrCode" src="" alt="QR Code will appear here" draggable="true" />
+              </div>
+              
+              <!-- Download Options -->
+              <div id="downloadOptions">
+                  <button class="btn" onclick="downloadMainQRCode('png')">Download PNG</button>
+                  <button class="btn" onclick="downloadMainQRCode('jpg')">Download JPG</button>
+                  <button class="btn" onclick="CopyQRCode()">Copy QR Code</button>
+                  <button id="shareButton" onclick="shareQRCode()">Share QR Code</button>
+
+
+              </div>
+          </div>
+
+          <!-- Analytics Section (Coming Soon) -->
+          <div id="analyticsContainer" style="display: none;">
+              <h3>Analytics (Coming soon)</h3>
+              <p>Tracking data will appear here.</p>
+          </div>
+
+          <!-- Bulk QR Code Generator Section -->
+          <div id="bulkQRCodeSection">
+            <h2 class="bulk-title">Bulk QR Code Generator</h2>
+            <p class="bulk-description">Enter multiple URLs or text below, separated by commas. Generate QR codes for each in bulk!</p>
+            
+            <!-- Input Field -->
+            <textarea id="bulkInput" placeholder="Enter multiple URLs or text, separated by commas"></textarea>
+            
+            <!-- Action Button -->
+            <button class="btn bulk-generate-btn" onclick="generateBulkQRCode()">Generate Bulk QR Codes</button>
+            
+            <!-- QR Codes Display Section -->
+            <div id="bulkQRCodeContainer">
+                <p class="bulk-placeholder">Generated QR codes will appear here.</p>
+            </div>
+        </div>
+        
+        <label>
+            <input type="checkbox" id="darkModeToggle"> Dark Mode
+        </label>
+        
+      </main>
+
+      <footer>
+          <p>&copy; 2025 QR Code Generator Tool | <a href="#">Privacy Policy</a></p>
+      </footer>
+
+    </div>
+
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="qrcodeafricanprint.js"></script>
+  
+</body>
+</html>

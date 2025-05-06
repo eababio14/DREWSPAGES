@@ -1,0 +1,121 @@
+/* Side Navigation Styling */
+.side-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px; /* Adjust width as needed */
+    height: 100%;
+    background-color: #2c3e50; /* Dark Blue */
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.side-header h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.side-header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.side-header nav ul li {
+    padding: 10px 0;
+    text-align: center;
+}
+
+.side-header nav ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    transition: background 0.3s;
+}
+
+.side-header nav ul li a:hover {
+    background: #34495e;
+    border-radius: 5px;
+}
+
+/* Main content adjustment */
+.invoice-container {
+    margin-left: 270px; /* Push main content to the right */
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .side-header {
+        width: 200px;
+    }
+    
+    .invoice-container {
+        margin-left: 220px;
+    }
+}
+
+@media (max-width: 480px) {
+    .side-header {
+        position: absolute;
+        width: 100%;
+        height: auto;
+        padding: 10px;
+    }
+
+    .invoice-container {
+        margin-left: 0;
+        padding: 10px;
+    }
+}
+
+/* Footer */
+footer {
+    background: #343a40;
+    color: #d3d3d3;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 30px;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  /* Footer Links */
+  .footer-container a {
+    color: #f8f9fa;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .footer-container a:hover {
+    text-decoration: underline;
+  }
+
+   /* Style for buttons inside the sidebar */
+   .side-header button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Button when hovered */
+  .side-header button:hover {
+    background-color: #34495e; /* Darker shade for hover */
+  }
+  
